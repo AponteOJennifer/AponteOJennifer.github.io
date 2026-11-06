@@ -187,13 +187,22 @@
   }
 
   /* ---------- sections ---------- */
-  section { margin-top: 4.4rem; scroll-margin-top: calc(var(--barh) + 1.2rem); }
-  .sn { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); margin-bottom: 1rem; }
-  .sn b { color: var(--acc); font-weight: 500; }
+  section { margin-top: 4.9rem; scroll-margin-top: calc(var(--barh) + 1.2rem); }
+  .sn {
+    display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap;
+    font-size: .88rem; font-weight: 500; letter-spacing: .24em;
+    text-transform: uppercase; color: var(--fg);
+    margin-bottom: 1.5rem;
+  }
+  .sn b { color: var(--acc); font-weight: 500; letter-spacing: .1em; }
+  .sn i { color: var(--faint); font-style: normal; letter-spacing: 0; }
+  .sn + p { margin-top: -.3rem; }
+  /* Only the closing line still uses a serif heading, as a bookend to the
+     hero. Every section is headed by its numbered label instead. */
   h2 {
     font-family: var(--serif); font-weight: 400;
     font-size: clamp(1.8rem, 4.8vw, 2.6rem); line-height: 1.15;
-    margin-bottom: 1.1rem; max-width: 22ch;
+    margin-bottom: 1.1rem; max-width: 24ch;
   }
   h3 { font-size: .92rem; font-weight: 500; }
   .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
@@ -462,11 +471,10 @@
   </div>
 
   <section id="about">
-    <div class="sn"><b>01</b> &nbsp;//&nbsp; About</div>
+    <div class="sn"><b>01</b><i>//</i>About</div>
     <div class="cols">
       <div>
-        <h2>Four years making data <span class="k">trustworthy</span></h2>
-        <p class="dim">Production dbt models on Snowflake under version control and
+            <p class="dim">Production dbt models on Snowflake under version control and
           peer review, with automated tests and audits that surface defects at the
           source. I built the training dataset and owned the pipeline feeding a deep
           learning pricing model across Hilton's global portfolio.</p>
@@ -510,8 +518,7 @@
   </section>
 
   <section id="pipeline">
-    <div class="sn"><b>02</b> &nbsp;//&nbsp; Selected project</div>
-    <h2>Short-term rental pricing and <span class="k">demand pipeline</span></h2>
+    <div class="sn"><b>02</b><i>//</i>Short-term rental pipeline</div>
 
     <div class="cols">
       <div>
@@ -569,8 +576,7 @@
   </section>
 
   <section id="findings">
-    <div class="sn"><b>03</b> &nbsp;//&nbsp; What it found</div>
-    <h2>The pipeline was the <span class="k">easy half</span></h2>
+    <div class="sn"><b>03</b><i>//</i>What it found</div>
     <p class="dim">The useful half was what it turned up in its own inputs, and which
       of my own ideas the measurements threw out.</p>
 
@@ -618,8 +624,7 @@
   </section>
 
   <section id="estimator">
-    <div class="sn"><b>04</b> &nbsp;//&nbsp; Try it yourself</div>
-    <h2>The occupancy estimator, <span class="k">in your hands</span></h2>
+    <div class="sn"><b>04</b><i>//</i>Try the estimator</div>
     <p class="dim">No bookings exist in this data, so occupancy has to be inferred.
       Reviews stand in for stays, scaled by how often guests actually leave one and how
       long they stay. Every assumption below is a real variable in the dbt project.
@@ -669,8 +674,7 @@
   </section>
 
   <section id="work">
-    <div class="sn"><b>05</b> &nbsp;//&nbsp; Experience</div>
-    <h2>What I do at <span class="k">Hilton</span></h2>
+    <div class="sn"><b>05</b><i>//</i>Experience</div>
 
     <div class="entries">
       <div class="entry">
@@ -717,11 +721,10 @@
   </section>
 
   <section id="journey">
-    <div class="sn"><b>06</b> &nbsp;//&nbsp; Journey</div>
-    <h2>DC to Houston to <span class="k">Dallas</span></h2>
-    <p class="dim">A psychology degree that turned into a data career, and a steady
-      move toward the part of the work where the numbers get built rather than just
-      read.</p>
+    <div class="sn"><b>06</b><i>//</i>Journey</div>
+    <p class="dim">DC to Houston to Dallas. A psychology degree that turned into a
+      data career, and a steady move toward the part of the work where the numbers
+      get built rather than just read.</p>
 
     <div class="journey">
       <svg viewBox="0 0 900 200" role="img" aria-label="Career path from Washington DC to Houston to Dallas.">
@@ -745,11 +748,7 @@
   </section>
 
   <section id="skills">
-    <div class="sn"><b>07</b> &nbsp;//&nbsp; Skills</div>
-    <h2>What I build <span class="k">with</span></h2>
-    <p class="dim">Rated against what I have shipped rather than what I have touched
-      once, which is why most of these are not maxed out.</p>
-
+    <div class="sn"><b>07</b><i>//</i>Skills</div>
     <div class="tabs" role="tablist" aria-label="Skill categories">
       <button class="tab" role="tab" id="t-prog" aria-controls="p-prog" aria-selected="true" data-k="prog" type="button">Programming</button>
       <button class="tab" role="tab" id="t-de" aria-controls="p-de" aria-selected="false" data-k="de" type="button">Data Engineering</button>
@@ -767,8 +766,8 @@
           <div class="skgrid">
           <div class="skrow"><div class="top"><span class="nm">SQL</span><span class="lv x">Expert</span></div><i class="skbar"><b style="width:100%"></b></i></div>
           <div class="skrow"><div class="top"><span class="nm">Python</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:84%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Bash</span><span class="lv">Working</span></div><i class="skbar"><b style="width:58%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">R</span><span class="lv">Familiar</span></div><i class="skbar"><b style="width:38%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Bash</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:58%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">R</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:46%"></b></i></div>
           </div>
         </div>
         <div class="skgroup">
@@ -777,8 +776,8 @@
           <div class="skrow"><div class="top"><span class="nm">pandas</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:84%"></b></i></div>
           <div class="skrow"><div class="top"><span class="nm">NumPy</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:78%"></b></i></div>
           <div class="skrow"><div class="top"><span class="nm">scikit-learn</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:76%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">statsmodels</span><span class="lv">Working</span></div><i class="skbar"><b style="width:62%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">PyTorch</span><span class="lv">Working</span></div><i class="skbar"><b style="width:56%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">statsmodels</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:62%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">PyTorch</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:56%"></b></i></div>
           </div>
         </div>
       </div>
@@ -791,7 +790,7 @@
           <div class="skrow"><div class="top"><span class="nm">dbt</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:86%"></b></i></div>
           <div class="skrow"><div class="top"><span class="nm">Dimensional modelling</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:84%"></b></i></div>
           <div class="skrow"><div class="top"><span class="nm">Schema &amp; grain design</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:82%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Slowly changing dimensions</span><span class="lv">Working</span></div><i class="skbar"><b style="width:64%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Slowly changing dimensions</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:64%"></b></i></div>
           </div>
         </div>
         <div class="skgroup">
@@ -800,7 +799,7 @@
           <div class="skrow"><div class="top"><span class="nm">Idempotent load design</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:82%"></b></i></div>
           <div class="skrow"><div class="top"><span class="nm">ETL and ELT design</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:80%"></b></i></div>
           <div class="skrow"><div class="top"><span class="nm">Incremental &amp; snapshot ingestion</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:78%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Apache Airflow</span><span class="lv">Working</span></div><i class="skbar"><b style="width:66%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Apache Airflow</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:66%"></b></i></div>
           </div>
         </div>
         <div class="skgroup">
@@ -809,17 +808,17 @@
           <div class="skrow"><div class="top"><span class="nm">Data quality testing</span><span class="lv x">Expert</span></div><i class="skbar"><b style="width:100%"></b></i></div>
           <div class="skrow"><div class="top"><span class="nm">Reconciliation against source</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:86%"></b></i></div>
           <div class="skrow"><div class="top"><span class="nm">Anomaly &amp; defect detection</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:82%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Data governance</span><span class="lv">Working</span></div><i class="skbar"><b style="width:66%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Data governance</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:66%"></b></i></div>
           </div>
         </div>
         <div class="skgroup">
           <h4>Warehouses &amp; storage</h4>
           <div class="skgrid">
           <div class="skrow"><div class="top"><span class="nm">Snowflake</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:84%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Parquet &amp; columnar formats</span><span class="lv">Working</span></div><i class="skbar"><b style="width:64%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">DuckDB</span><span class="lv">Working</span></div><i class="skbar"><b style="width:62%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Redshift</span><span class="lv">Working</span></div><i class="skbar"><b style="width:56%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">BigQuery</span><span class="lv">Familiar</span></div><i class="skbar"><b style="width:40%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Parquet &amp; columnar formats</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:64%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">DuckDB</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:62%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Redshift</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:56%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">BigQuery</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:48%"></b></i></div>
           </div>
         </div>
       </div>
@@ -838,16 +837,16 @@
           <h4>Design</h4>
           <div class="skgrid">
           <div class="skrow"><div class="top"><span class="nm">Error handling &amp; retries</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:76%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Data contracts &amp; interfaces</span><span class="lv">Working</span></div><i class="skbar"><b style="width:64%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Schema migration</span><span class="lv">Working</span></div><i class="skbar"><b style="width:60%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Data contracts &amp; interfaces</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:64%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Schema migration</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:60%"></b></i></div>
           </div>
         </div>
         <div class="skgroup">
           <h4>Tooling</h4>
           <div class="skgrid">
-          <div class="skrow"><div class="top"><span class="nm">Docker</span><span class="lv">Working</span></div><i class="skbar"><b style="width:58%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Shell scripting</span><span class="lv">Working</span></div><i class="skbar"><b style="width:58%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">CI workflows</span><span class="lv">Working</span></div><i class="skbar"><b style="width:54%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Docker</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:58%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Shell scripting</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:58%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">CI workflows</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:54%"></b></i></div>
           </div>
         </div>
       </div>
@@ -877,8 +876,8 @@
           <div class="skrow"><div class="top"><span class="nm">Feature engineering</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:82%"></b></i></div>
           <div class="skrow"><div class="top"><span class="nm">Model validation &amp; error analysis</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:80%"></b></i></div>
           <div class="skrow"><div class="top"><span class="nm">Regression &amp; classification</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:80%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Clustering &amp; segmentation</span><span class="lv">Working</span></div><i class="skbar"><b style="width:66%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Deep learning</span><span class="lv">Working</span></div><i class="skbar"><b style="width:56%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Clustering &amp; segmentation</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:66%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Deep learning</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:56%"></b></i></div>
           </div>
         </div>
       </div>
@@ -887,16 +886,16 @@
         <div class="skgroup">
           <h4>Platforms</h4>
           <div class="skgrid">
-          <div class="skrow"><div class="top"><span class="nm">Azure</span><span class="lv">Working</span></div><i class="skbar"><b style="width:64%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Databricks</span><span class="lv">Working</span></div><i class="skbar"><b style="width:62%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">AWS</span><span class="lv">Working</span></div><i class="skbar"><b style="width:58%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Google Cloud</span><span class="lv">Working</span></div><i class="skbar"><b style="width:54%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Azure</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:64%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Databricks</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:62%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">AWS</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:58%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Google Cloud</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:54%"></b></i></div>
           </div>
         </div>
         <div class="skgroup">
           <h4>Distributed compute</h4>
           <div class="skgrid">
-          <div class="skrow"><div class="top"><span class="nm">Spark &amp; PySpark</span><span class="lv">Working</span></div><i class="skbar"><b style="width:58%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Spark &amp; PySpark</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:58%"></b></i></div>
           </div>
         </div>
       </div>
@@ -913,8 +912,8 @@
         <div class="skgroup">
           <h4>Building with models</h4>
           <div class="skgrid">
-          <div class="skrow"><div class="top"><span class="nm">Prompting &amp; grounding</span><span class="lv">Working</span></div><i class="skbar"><b style="width:66%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">LLM application patterns</span><span class="lv">Working</span></div><i class="skbar"><b style="width:56%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Prompting &amp; grounding</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:66%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">LLM application patterns</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:56%"></b></i></div>
           </div>
         </div>
       </div>
@@ -931,18 +930,18 @@
           <h4>Tools</h4>
           <div class="skgrid">
           <div class="skrow"><div class="top"><span class="nm">Power BI</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:78%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Tableau</span><span class="lv">Working</span></div><i class="skbar"><b style="width:66%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">Looker</span><span class="lv">Working</span></div><i class="skbar"><b style="width:62%"></b></i></div>
-          <div class="skrow"><div class="top"><span class="nm">MicroStrategy</span><span class="lv">Working</span></div><i class="skbar"><b style="width:58%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Tableau</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:66%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Looker</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:62%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">MicroStrategy</span><span class="lv">Intermediate</span></div><i class="skbar"><b style="width:58%"></b></i></div>
           </div>
         </div>
       </div>
 
     <p class="scale">
+      Rated against what I have shipped, not what I have touched once.
       <b>Expert</b> I would teach it and debug someone else's.
       <b>Advanced</b> I ship it in production.
-      <b>Working</b> I have built real things with it.
-      <b>Familiar</b> I can read it and get productive quickly.
+      <b>Intermediate</b> I have built real things with it.
     </p>
     <p class="scale" style="margin-top:.4rem">
       M.S. Data Science, New Jersey Institute of Technology, 2026 &nbsp;&middot;&nbsp;
@@ -951,8 +950,7 @@
   </section>
 
   <section id="beyond">
-    <div class="sn"><b>08</b> &nbsp;//&nbsp; Beyond work</div>
-    <h2>Away from the <span class="k">warehouse</span></h2>
+    <div class="sn"><b>08</b><i>//</i>Beyond work</div>
     <div class="tags" style="margin-top:1.1rem">
       <span class="tag">Reading, mostly romantasy</span>
       <span class="tag">Travel, Japan so far</span>
@@ -963,8 +961,7 @@
 
 
   <section id="play">
-    <div class="sn"><b>09</b> &nbsp;//&nbsp; Play a game</div>
-    <h2>Can you beat the <span class="k">forecast</span>?</h2>
+    <div class="sn"><b>09</b><i>//</i>Play a game</div>
     <p class="dim">Six rounds. You can see Austin's real monthly demand through December
       2025. Guess what each month of 2026 actually brought. The model guesses too, using
       the same method that shipped in the pipeline. Lowest average error wins.</p>
@@ -1004,7 +1001,7 @@
   </section>
 
   <div class="close" id="contact">
-    <div class="sn"><b>10</b> &nbsp;//&nbsp; Let's talk</div>
+    <div class="sn"><b>10</b><i>//</i>Contact</div>
     <h2>Open to fully remote data, analytics and <span class="k">ML engineering</span> roles.</h2>
     <div class="contactline">
       <span><span id="mail">aponteojennifer@gmail.com</span><button class="copy" id="copy" type="button">Copy</button></span>
