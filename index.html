@@ -5,290 +5,288 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Jennifer Aponte builds the data infrastructure behind pricing decisions. Airflow, dbt and Snowflake, with a backtested short-term rental demand pipeline.">
 <meta name="author" content="Jennifer Aponte">
-<meta name="theme-color" content="#fbf7f4" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#15100e" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fdf6f2">
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Jennifer Aponte">
 <meta property="og:description" content="Jennifer Aponte builds the data infrastructure behind pricing decisions. Airflow, dbt and Snowflake, with a backtested short-term rental demand pipeline.">
 <meta property="og:url" content="https://aponteojennifer.github.io/">
 <meta name="twitter:card" content="summary">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232c2420'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' fill='%23c9ab7e' text-anchor='middle'%3EJA%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23fdf6f2'/%3E%3Ctext x='32' y='45' font-family='Garamond,Georgia,serif' font-size='36' fill='%23a85f63' text-anchor='middle'%3EJA%3C/text%3E%3C/svg%3E">
 <title>Jennifer Aponte</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:ital,wght@0,300;0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap">
 <style>
-  /* Layout: a magazine. Masthead, contents, then numbered sections on a single
-     measured column, with figures set as a spread. */
+  /* One warm, light world. Monospace carries the structure, a serif carries
+     the voice, and every accent word is the serif italic. */
   :root {
-    --paper: #fbf7f4;
-    --card: #ffffff;
-    --ink: #2c2420;
-    --muted: #7b6b62;
-    --rule: #e9ded6;
-    --rule-ink: #d6c6ba;
-    --rose: #a2676a;
-    --champagne: #c9ab7e;
+    color-scheme: light;
+    --bg: #fdf6f2;
+    --bg-tint: #fbefe9;
+    --panel: #fffcfa;
+    --line: #f0ded5;
+    --line-firm: #e4cbc0;
+    --fg: #3a2d29;
+    --dim: #79645c;
+    --faint: #a08c83;
+    --acc: #a85f63;
+    --acc-deep: #8c4a4f;
+    --acc2: #b2823f;
+    --accdim: #f7e7e5;
+    --shadow: 0 1px 2px rgba(140, 74, 79, .04), 0 16px 40px -22px rgba(140, 74, 79, .28);
 
-    --display: "Bodoni Moda", ui-serif, Didot, Georgia, serif;
-    --sans: "Jost", ui-sans-serif, "Avenir Next", system-ui, sans-serif;
-
-    --measure: 34rem;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --paper: #15100e;
-      --card: #1d1715;
-      --ink: #f1e8e2;
-      --muted: #b2a096;
-      --rule: #2c2320;
-      --rule-ink: #41352f;
-      --rose: #d79a9c;
-      --champagne: #dcbc8c;
-      color-scheme: dark;
-    }
-  }
-  :root[data-theme="dark"] {
-    --paper: #15100e;
-    --card: #1d1715;
-    --ink: #f1e8e2;
-    --muted: #b2a096;
-    --rule: #2c2320;
-    --rule-ink: #41352f;
-    --rose: #d79a9c;
-    --champagne: #dcbc8c;
-    color-scheme: dark;
+    --serif: "Cormorant Garamond", Garamond, Georgia, serif;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   }
 
   * { box-sizing: border-box; }
 
   body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 1.72;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.75;
     -webkit-font-smoothing: antialiased;
   }
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: -2; pointer-events: none;
+    background:
+      radial-gradient(42rem 28rem at 88% -8%, rgba(206, 143, 146, .24), transparent 62%),
+      radial-gradient(38rem 26rem at -6% 46%, rgba(216, 180, 128, .20), transparent 60%);
+  }
+  body::after {
+    content: "";
+    position: fixed; inset: 0; z-index: -1; opacity: .05; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
 
-  .sheet {
-    max-width: 58rem;
+  .wrap {
+    position: relative;
+    max-width: 62rem;
     margin: 0 auto;
-    padding-left: max(16px, env(safe-area-inset-left, 0px));
-    padding-right: max(16px, env(safe-area-inset-right, 0px));
-    padding-block: 2.25rem 4.5rem;
+    padding-left: max(18px, env(safe-area-inset-left, 0px));
+    padding-right: max(18px, env(safe-area-inset-right, 0px));
+    padding-block: 2.6rem 4rem;
   }
 
-  a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--rule-ink); padding-bottom: 1px; }
-  a:hover { border-bottom-color: var(--rose); color: var(--rose); }
-  a:focus-visible { outline: 2px solid var(--rose); outline-offset: 4px; }
+  a { color: var(--acc-deep); text-decoration: none; border-bottom: 1px solid var(--accdim); }
+  a:hover { border-bottom-color: var(--acc); }
+  a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; border-radius: 3px; }
 
-  .label {
-    font-family: var(--sans);
-    font-weight: 400;
-    font-size: 0.68rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  /* ---------------- masthead ---------------- */
-  .masthead { border-top: 1px solid var(--ink); padding-top: 0.6rem; }
-  .masthead .topline {
-    display: flex; justify-content: space-between; gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .name {
-    font-family: var(--display);
-    font-weight: 400;
-    font-size: clamp(3rem, 13vw, 7.5rem);
-    line-height: 0.95;
-    letter-spacing: -0.015em;
-    /* Descenders overhang a sub-1 line box, so the bottom margin carries the
-       p in Aponte clear of the rule beneath it. */
-    margin: 1.4rem 0 1.9rem;
-    text-wrap: balance;
-  }
-  .masthead .baseline {
-    border-top: 1px solid var(--ink);
-    padding-top: 0.6rem;
-    display: flex; justify-content: space-between; gap: 0.6rem 1.5rem;
-    flex-wrap: wrap;
-  }
-  .baseline em {
-    font-family: var(--display);
-    font-style: italic;
-    font-size: 1.05rem;
-    color: var(--ink);
-  }
-
-  /* ---------------- contents ---------------- */
-  .contents {
-    margin-top: 3.25rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
-    gap: 1.4rem 2.5rem;
-  }
-  .contents > a {
-    border: 0;
-    border-top: 1px solid var(--rule);
-    padding-top: 0.6rem;
-    display: flex;
-    gap: 0.75rem;
-    align-items: baseline;
-    min-width: 0;
-  }
-  .contents > a:hover { color: var(--rose); border-top-color: var(--rose); }
-  .contents .num {
-    font-family: var(--display);
-    font-size: 0.85rem;
-    color: var(--champagne);
-    flex: none;
-  }
-  .contents .ttl { font-size: 0.95rem; }
-
-  /* ---------------- lede ---------------- */
-  .lede {
-    margin: 3.5rem 0 0;
-    font-family: var(--display);
-    font-weight: 400;
-    font-size: clamp(1.3rem, 3.6vw, 1.75rem);
-    line-height: 1.42;
-    max-width: 30rem;
-    text-wrap: pretty;
-  }
-  .lede-sub {
-    margin: 1.25rem 0 0;
-    max-width: var(--measure);
-    color: var(--muted);
-  }
-
-  /* ---------------- sections ---------------- */
-  section { margin-top: 4.5rem; }
-  .shead {
-    border-top: 1px solid var(--ink);
-    padding-top: 0.6rem;
-    display: flex; gap: 1rem; align-items: baseline; flex-wrap: wrap;
-    margin-bottom: 1.6rem;
-  }
-  .shead .num { font-family: var(--display); color: var(--champagne); font-size: 0.9rem; }
-  h2 {
-    font-family: var(--display);
-    font-weight: 400;
-    font-size: clamp(1.6rem, 4.4vw, 2.2rem);
-    line-height: 1.15;
-    margin: 0;
-    flex: 1 1 14rem;
-    min-width: 0;
-  }
-  h3 { font-family: var(--sans); font-weight: 500; font-size: 1.02rem; margin: 0; letter-spacing: 0.005em; }
-  p { margin: 0 0 1.1rem; max-width: var(--measure); }
+  h1, h2, h3 { margin: 0; }
+  p { margin: 0 0 1rem; max-width: 48ch; }
   p:last-child { margin-bottom: 0; }
+  .dim { color: var(--dim); }
 
-  .kicker {
-    font-family: var(--display);
-    font-style: italic;
-    color: var(--rose);
-    font-size: 1.02rem;
-    margin-bottom: 0.9rem;
+  /* ---------- hero ---------- */
+  .pill {
+    display: inline-flex; align-items: center; gap: .55rem;
+    border: 1px solid var(--line); background: var(--panel);
+    border-radius: 999px; padding: .28rem .85rem;
+    font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--dim);
+  }
+  .pill i {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--acc);
+    box-shadow: 0 0 0 3px var(--accdim);
   }
 
-  /* ---------------- figures spread ---------------- */
-  .spread {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-    gap: 1.8rem 2.2rem;
-    margin: 2.4rem 0;
-    padding: 1.9rem 0;
-    border-top: 1px solid var(--rule-ink);
-    border-bottom: 1px solid var(--rule-ink);
-  }
-  .fig { min-width: 0; }
-  .fig b {
-    display: block;
-    font-family: var(--display);
+  h1 {
+    font-family: var(--serif);
     font-weight: 400;
-    font-size: clamp(2.1rem, 6.5vw, 2.9rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
+    font-size: clamp(2.6rem, 7.5vw, 4.4rem);
+    line-height: 1.08;
+    letter-spacing: .005em;
+    margin: 1.1rem 0 .9rem;
+    max-width: 19ch;
+  }
+  .k { color: var(--acc); font-style: italic; }
+
+  .btns { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1.3rem; }
+  .btn {
+    border: 1px solid var(--line); background: var(--panel); color: var(--fg);
+    border-radius: 7px; padding: .5rem 1.05rem; font-size: .82rem;
+    font-family: var(--mono); cursor: pointer;
+  }
+  .btn:hover { border-color: var(--line-firm); }
+  .btn.on {
+    background: var(--acc); border-color: var(--acc); color: var(--panel); font-weight: 500;
+  }
+  .btn.on:hover { background: var(--acc-deep); border-color: var(--acc-deep); }
+  a.btn { border-bottom: 1px solid var(--line); }
+  a.btn.on { border-bottom-color: var(--acc); }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    margin-top: 2.6rem;
+  }
+  .stat { padding: 1.2rem 1rem; text-align: center; border-left: 1px solid var(--line); min-width: 0; }
+  .stat:first-child { border-left: 0; }
+  .stat b {
+    display: block; font-family: var(--serif); font-weight: 500;
+    font-size: 2.05rem; line-height: 1; color: var(--acc);
     font-variant-numeric: tabular-nums;
   }
-  .fig span {
-    display: block;
-    margin-top: 0.55rem;
-    font-size: 0.8rem;
-    line-height: 1.45;
-    color: var(--muted);
+  .stat span {
+    display: block; margin-top: .5rem; font-size: .62rem;
+    letter-spacing: .13em; text-transform: uppercase; color: var(--faint);
   }
 
-  /* ---------------- findings ---------------- */
-  .findings { margin: 2.2rem 0 0; display: flex; flex-direction: column; gap: 1.9rem; }
-  .finding { display: grid; grid-template-columns: 2.1rem 1fr; gap: 0 1.1rem; min-width: 0; }
-  .finding .n {
-    font-family: var(--display);
-    font-size: 1.15rem;
-    color: var(--champagne);
-    line-height: 1.5;
+  /* ---------- sections ---------- */
+  section { margin-top: 4.2rem; scroll-margin-top: 1.5rem; }
+  .sn {
+    font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 1rem;
   }
-  .finding h3 { margin-bottom: 0.3rem; }
-  .finding p { color: var(--muted); margin: 0; font-size: 0.95rem; }
-  .finding .n + h3 { grid-column: 2; }
-  .finding p { grid-column: 2; }
-  .num { font-variant-numeric: tabular-nums; }
-  .pick { color: var(--rose); }
-  @media (max-width: 520px) {
-    .finding { grid-template-columns: 1fr; gap: 0.3rem; }
-    .finding .n + h3, .finding p { grid-column: 1; }
+  .sn b { color: var(--acc); font-weight: 500; }
+  h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.75rem, 4.6vw, 2.5rem); line-height: 1.16;
+    margin-bottom: 1.1rem; max-width: 22ch;
+  }
+  h3 { font-size: .92rem; font-weight: 500; }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+  .cols > * { min-width: 0; }
+  @media (max-width: 760px) { .cols { grid-template-columns: 1fr; gap: 1.6rem; } }
+
+  /* ---------- terminal ---------- */
+  .term {
+    border: 1px solid var(--line); border-radius: 11px;
+    background: var(--panel); overflow: hidden; box-shadow: var(--shadow);
+  }
+  .term .bar {
+    display: flex; align-items: center; gap: .4rem;
+    padding: .55rem .85rem; border-bottom: 1px solid var(--line);
+    font-size: .7rem; color: var(--faint);
+  }
+  .term .bar i { width: 8px; height: 8px; border-radius: 50%; background: var(--line-firm); }
+  .term .bar .fn { margin-left: .45rem; }
+  .term pre {
+    margin: 0; padding: 1rem 1.1rem; font-size: .78rem; line-height: 1.8;
+    white-space: pre-wrap; word-break: break-word;
+  }
+  .kw { color: var(--acc2); } .st { color: var(--acc); } .cm { color: var(--faint); }
+
+  /* ---------- tags ---------- */
+  .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .tag {
+    border: 1px solid var(--line); background: var(--panel);
+    border-radius: 999px; padding: .18rem .75rem; font-size: .75rem; color: var(--dim);
+  }
+  .tag.on { border-color: var(--acc); color: var(--acc-deep); background: var(--accdim); }
+
+  /* ---------- curve ---------- */
+  .curve { margin: 1.6rem 0 .4rem; }
+  .curve svg { display: block; width: 100%; height: auto; }
+  .cap { font-size: .72rem; color: var(--faint); text-align: center; margin: 0; }
+
+  /* ---------- cards ---------- */
+  .cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr));
+    gap: 1rem; margin-top: 1.5rem;
+  }
+  .card {
+    border: 1px solid var(--line); background: var(--panel);
+    border-radius: 14px; padding: 1.4rem 1.4rem; box-shadow: var(--shadow); min-width: 0;
+  }
+  .card .n {
+    font-family: var(--serif); font-weight: 500; font-size: 1.5rem;
+    color: var(--acc2); line-height: 1; display: block; margin-bottom: .45rem;
+  }
+  .card h3 { margin-bottom: .45rem; }
+  .card p { color: var(--dim); font-size: .82rem; line-height: 1.68; margin: 0; max-width: none; }
+  .num { font-variant-numeric: tabular-nums; color: var(--acc-deep); }
+
+  /* ---------- estimator ---------- */
+  .est {
+    border: 1px solid var(--line); background: var(--panel);
+    border-radius: 14px; box-shadow: var(--shadow); overflow: hidden;
+  }
+  .est .body { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  @media (max-width: 760px) { .est .body { grid-template-columns: 1fr; } }
+  .est .controls { padding: 1.3rem 1.4rem; border-right: 1px solid var(--line); }
+  @media (max-width: 760px) { .est .controls { border-right: 0; border-bottom: 1px solid var(--line); } }
+  .est .out { padding: 1.3rem 1.4rem; background: var(--bg-tint); }
+
+  .ctl { margin-bottom: 1.15rem; }
+  .ctl:last-child { margin-bottom: 0; }
+  .ctl label {
+    display: flex; justify-content: space-between; gap: 1rem;
+    font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim);
+    margin-bottom: .35rem;
+  }
+  .ctl label b { color: var(--acc-deep); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .ctl input[type=range] {
+    width: 100%; accent-color: var(--acc); height: 1.2rem; margin: 0;
   }
 
-  /* ---------------- entries ---------------- */
-  .entries { display: flex; flex-direction: column; }
+  .readout { display: grid; gap: .7rem; }
+  .ro { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .ro span { font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+  .ro b {
+    font-family: var(--serif); font-weight: 500; font-size: 1.5rem;
+    color: var(--fg); line-height: 1; font-variant-numeric: tabular-nums;
+  }
+  .ro.lead b { color: var(--acc); font-size: 2.1rem; }
+  .meter { height: 7px; border-radius: 999px; background: var(--line); overflow: hidden; margin-top: .2rem; }
+  .meter i { display: block; height: 100%; background: var(--acc); border-radius: 999px; transition: width .18s ease; }
+  .capped { font-size: .72rem; color: var(--acc2); margin-top: .55rem; min-height: 1.2em; }
+
+  /* ---------- entries ---------- */
+  .entries { display: grid; gap: .9rem; margin-top: 1.5rem; }
   .entry {
-    padding: 1.4rem 0;
-    border-top: 1px solid var(--rule);
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
+    border: 1px solid var(--line); border-left: 3px solid var(--accdim);
+    background: var(--panel); border-radius: 4px 14px 14px 4px;
+    padding: 1.2rem 1.35rem; min-width: 0;
   }
-  .entry:first-child { border-top: 0; padding-top: 0; }
-  .entry-head { display: flex; flex-wrap: wrap; gap: 0.15rem 1rem; align-items: baseline; }
-  .entry-head .label { flex: none; }
-  .entry p { color: var(--muted); font-size: 0.95rem; }
+  .entry-head { display: flex; flex-wrap: wrap; gap: .1rem .9rem; align-items: baseline; margin-bottom: .4rem; }
+  .meta { font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+  .entry p { color: var(--dim); font-size: .85rem; max-width: none; }
 
-  /* ---------------- tools ---------------- */
-  .tools { display: flex; flex-direction: column; }
-  .tool {
-    display: grid;
-    grid-template-columns: 10rem 1fr;
-    gap: 0.35rem 2rem;
-    padding: 1rem 0;
-    border-top: 1px solid var(--rule);
-    min-width: 0;
-  }
-  .tool:first-child { border-top: 0; padding-top: 0; }
-  .tool dd { margin: 0; font-size: 0.95rem; min-width: 0; }
-  @media (max-width: 560px) { .tool { grid-template-columns: 1fr; } }
+  /* ---------- journey ---------- */
+  .journey { border: 1px solid var(--line); background: var(--panel); border-radius: 14px; padding: 1.4rem 1rem .9rem; box-shadow: var(--shadow); margin-top: 1.4rem; }
+  .journey svg { display: block; width: 100%; height: auto; }
 
-  /* ---------------- close ---------------- */
-  .close { margin-top: 4.5rem; border-top: 1px solid var(--ink); padding-top: 1.4rem; }
-  .close .row {
-    display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; align-items: baseline;
-    margin-top: 0.9rem;
+  /* ---------- rails ---------- */
+  .rail { display: grid; grid-template-columns: 11rem 1fr; gap: .4rem 2rem; padding: 1rem 0; border-top: 1px solid var(--line); min-width: 0; }
+  .rail:first-of-type { border-top: 0; }
+  .rail > div { min-width: 0; }
+  @media (max-width: 620px) { .rail { grid-template-columns: 1fr; } }
+
+  /* ---------- close ---------- */
+  .close {
+    margin-top: 4.5rem; border-top: 1px solid var(--line-firm); padding-top: 2.2rem;
   }
-  .mailrow { display: inline-flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+  .close h2 { font-size: clamp(1.9rem, 5.4vw, 3rem); max-width: 26ch; }
+  .contactline { display: flex; flex-wrap: wrap; gap: .6rem 1.6rem; align-items: baseline; margin-top: 1.2rem; }
+  #mail { border-bottom: 1px solid var(--line-firm); }
   .copy {
-    font-family: var(--sans);
-    font-size: 0.66rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: none;
-    border: 1px solid var(--rule-ink);
-    border-radius: 999px;
-    padding: 0.15rem 0.6rem;
-    cursor: pointer;
+    font-family: var(--mono); font-size: .64rem; font-weight: 500;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--acc-deep);
+    background: var(--accdim); border: 1px solid var(--accdim);
+    border-radius: 999px; padding: .18rem .7rem; cursor: pointer; margin-left: .5rem;
   }
-  .copy:hover { color: var(--rose); border-color: var(--rose); }
+  .copy:hover { border-color: var(--acc); }
+  footer {
+    margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 1rem;
+    font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--faint);
+  }
+
+  /* ---------- scroll readout ---------- */
+  .scroll {
+    position: fixed; right: max(12px, env(safe-area-inset-right, 0px));
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    border: 1px solid var(--line); background: var(--panel);
+    border-radius: 6px; padding: .22rem .62rem;
+    font-size: .66rem; color: var(--faint); z-index: 5;
+  }
+  .scroll b { color: var(--acc); font-weight: 500; font-variant-numeric: tabular-nums; }
+  @media (max-width: 620px) { .scroll { display: none; } }
 </style>
 <style>
   html, body { margin: 0; }
@@ -296,282 +294,453 @@
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
-  img { max-width: 100%; }
+  img, svg { max-width: 100%; }
   html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
-<div class="sheet">
+<div class="wrap">
 
-  <header class="masthead">
-    <div class="topline">
-      <span class="label">Portfolio</span>
-      <span class="label">Data &amp; Analytics Engineering</span>
-    </div>
-    <h1 class="name">Jennifer Aponte</h1>
-    <div class="baseline">
-      <em>Pricing, demand, and the data underneath both</em>
-      <span class="label">Frisco, Texas &middot; Open to fully remote</span>
+  <header>
+    <span class="pill"><i></i>Frisco, TX &middot; Open to fully remote</span>
+
+    <h1>Turning messy pipelines into numbers you can <span class="k">trust</span>.</h1>
+
+    <p class="dim">Hi, I'm Jennifer, a data engineer working in revenue management.
+      I build the pipelines, models and tests that pricing decisions rest on, and I
+      spend most of my time proving the numbers are right before anyone acts on them.</p>
+
+    <div class="btns">
+      <a class="btn on" href="#pipeline">view the work &rarr;</a>
+      <a class="btn" href="#estimator">try the estimator</a>
+      <a class="btn" href="#contact">get in touch</a>
     </div>
 
-    <nav class="contents">
-      <a href="#pipeline"><span class="num">I</span><span class="ttl">Short-term rental pipeline</span></a>
-      <a href="#findings"><span class="num">II</span><span class="ttl">What it found</span></a>
-      <a href="#hilton"><span class="num">III</span><span class="ttl">Production work</span></a>
-      <a href="#tools"><span class="num">IV</span><span class="ttl">Toolkit</span></a>
-      <a href="#contact"><span class="num">V</span><span class="ttl">Contact</span></a>
-    </nav>
+    <div class="stats">
+      <div class="stat"><b>146,490</b><span>listing-months modelled</span></div>
+      <div class="stat"><b>2.48M</b><span>reviews processed</span></div>
+      <div class="stat"><b>7.83%</b><span>forecast error</span></div>
+      <div class="stat"><b>4</b><span>years in revenue mgmt</span></div>
+    </div>
   </header>
 
-  <p class="lede">
-    I build the data infrastructure that pricing decisions rest on, and I spend
-    most of my time on the part nobody sees: proving the numbers are right
-    before anyone acts on them.
-  </p>
-  <p class="lede-sub">
-    Four years at Hilton across revenue management and sales support, writing
-    production dbt models on Snowflake and owning the pipeline behind a deep
-    learning pricing model. M.S. in Data Science, and a psychology degree that
-    turns out to be unexpectedly useful for understanding how people actually
-    read a number.
-  </p>
+  <section id="about">
+    <div class="sn"><b>01</b> &nbsp;//&nbsp; About</div>
+    <div class="cols">
+      <div>
+        <h2>Four years making data <span class="k">trustworthy</span></h2>
+        <p class="dim">Production dbt models on Snowflake under version control and
+          peer review, with automated tests and audits that surface defects at the
+          source. I built the training dataset and owned the pipeline feeding a deep
+          learning pricing model across Hilton's global portfolio.</p>
+        <p class="dim">M.S. in Data Science from NJIT, and a psychology degree that
+          turns out to be unexpectedly useful for understanding how people actually
+          read a number.</p>
+      </div>
+      <div class="term">
+        <div class="bar"><i></i><i></i><i></i><span class="fn">query.sql</span></div>
+<pre><span class="kw">SELECT</span> jennifer
+<span class="kw">FROM</span>   data_engineers
+<span class="kw">WHERE</span>  stack @> <span class="st">'{python, sql, dbt, airflow}'</span>
+  <span class="kw">AND</span>  ships_tests = <span class="kw">true</span>
+<span class="kw">ORDER BY</span> rigor <span class="kw">DESC</span>
+<span class="kw">LIMIT</span>  1;
+
+<span class="cm">-- 1 row returned in 0.02s</span></pre>
+      </div>
+    </div>
+  </section>
 
   <section id="pipeline">
-    <div class="shead">
-      <span class="num">I</span>
-      <h2>Short-term rental pricing and demand pipeline</h2>
-      <span class="label"><a href="https://github.com/AponteOJennifer/str-pipeline">View the repository</a></span>
+    <div class="sn"><b>02</b> &nbsp;//&nbsp; Selected project</div>
+    <h2>Short-term rental pricing and <span class="k">demand pipeline</span></h2>
+
+    <div class="cols">
+      <div>
+        <p class="dim">Hotel revenue management runs on three numbers: occupancy,
+          average daily rate, and RevPAR. Short-term rental data is almost never
+          analyzed that way, because the public data contains no bookings at all. It
+          does contain reviews, and reviews are a documented proxy for stays.</p>
+        <p class="dim">Airflow ingests Inside Airbnb snapshots for Austin, dbt models
+          them on a DuckDB warehouse, and the output is those three metrics by
+          neighbourhood and month plus a backtested weekly demand forecast.</p>
+      </div>
+      <div>
+        <p class="dim">The forecast is seasonal naive with drift, scored across twelve
+          rolling origins at a twelve week horizon: <span class="num">7.83%</span>
+          MAPE, <span class="num">34%</span> better than the baseline, with prediction
+          intervals taken from backtest residuals rather than assumed.</p>
+        <p class="dim">Forecasts are keyed on training vintage, so every past forecast
+          stays scoreable against what actually happened.
+          <a href="https://github.com/AponteOJennifer/str-pipeline">Read the code &rarr;</a></p>
+      </div>
     </div>
 
-    <p class="kicker">Airflow &middot; dbt &middot; DuckDB &middot; scikit-learn</p>
-
-    <p>
-      Hotel revenue management runs on three numbers: occupancy, average daily
-      rate, and RevPAR. Short-term rental data is almost never analyzed that way,
-      because the public data contains no bookings at all. It does contain
-      reviews, and reviews are a documented proxy for stays.
-    </p>
-    <p>
-      This pipeline ingests Inside Airbnb snapshots for Austin with Airflow,
-      models them in dbt on a DuckDB warehouse, and produces those three metrics
-      by neighbourhood and month, with a backtested weekly demand forecast on
-      top.
-    </p>
-
-    <div class="spread">
-      <div class="fig"><b>146,490</b><span>listing-months modelled</span></div>
-      <div class="fig"><b>2.48M</b><span>reviews deduplicated</span></div>
-      <div class="fig"><b>7.83%</b><span>forecast error, twelve weeks out</span></div>
-      <div class="fig"><b>24</b><span>tests on every build</span></div>
-    </div>
-
-    <p>
-      The forecast is seasonal naive with drift, scored across twelve rolling
-      origins at a twelve week horizon: <span class="num">34%</span> better than
-      the baseline, with prediction intervals taken from the backtest residuals
-      rather than assumed. Forecasts are keyed on training vintage, so every
-      past forecast stays scoreable against what actually happened.
-    </p>
+    <figure class="curve">
+      <svg viewBox="0 0 1000 250" role="img" aria-label="Austin short-term rental demand by month, January 2025 through August 2026, peaking in March and October.">
+        <defs>
+          <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#c98588" stop-opacity=".38"/>
+            <stop offset="55%" stop-color="#d9ae84" stop-opacity=".15"/>
+            <stop offset="100%" stop-color="#e3c6a4" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="stroke" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#b2823f"/>
+            <stop offset="50%" stop-color="#a85f63"/>
+            <stop offset="100%" stop-color="#8c4a4f"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#fill)" d="M 20.0 196.0 C 28.4 191.5, 53.7 191.6, 70.5 169.0 C 87.3 146.4, 104.2 72.9, 121.1 60.3 C 137.9 47.7, 154.8 85.4, 171.6 93.5 C 188.4 101.6, 205.3 104.8, 222.1 109.0 C 238.9 113.2, 255.8 115.1, 272.6 118.7 C 289.5 122.3, 306.4 125.7, 323.2 130.5 C 340.0 135.3, 356.9 150.3, 373.7 147.4 C 390.5 144.5, 407.4 131.3, 424.2 112.9 C 441.0 94.5, 457.9 43.7, 474.7 37.2 C 491.5 30.8, 508.4 51.9, 525.3 74.2 C 542.1 96.5, 559.0 154.0, 575.8 171.2 C 592.6 188.3, 609.5 180.4, 626.3 177.1 C 643.1 173.8, 659.9 175.4, 676.8 151.6 C 693.6 127.8, 710.5 43.4, 727.4 34.0 C 744.2 24.6, 761.1 90.1, 777.9 95.3 C 794.7 100.5, 811.6 63.6, 828.4 65.3 C 845.2 67.0, 862.0 97.2, 878.9 105.4 C 895.8 113.6, 912.6 112.5, 929.5 114.3 C 946.4 116.1, 971.6 115.8, 980.0 116.1 L 980.0 250.0 L 20.0 250.0 Z"/>
+        <path fill="none" stroke="url(#stroke)" stroke-width="2.2" stroke-linecap="round" d="M 20.0 196.0 C 28.4 191.5, 53.7 191.6, 70.5 169.0 C 87.3 146.4, 104.2 72.9, 121.1 60.3 C 137.9 47.7, 154.8 85.4, 171.6 93.5 C 188.4 101.6, 205.3 104.8, 222.1 109.0 C 238.9 113.2, 255.8 115.1, 272.6 118.7 C 289.5 122.3, 306.4 125.7, 323.2 130.5 C 340.0 135.3, 356.9 150.3, 373.7 147.4 C 390.5 144.5, 407.4 131.3, 424.2 112.9 C 441.0 94.5, 457.9 43.7, 474.7 37.2 C 491.5 30.8, 508.4 51.9, 525.3 74.2 C 542.1 96.5, 559.0 154.0, 575.8 171.2 C 592.6 188.3, 609.5 180.4, 626.3 177.1 C 643.1 173.8, 659.9 175.4, 676.8 151.6 C 693.6 127.8, 710.5 43.4, 727.4 34.0 C 744.2 24.6, 761.1 90.1, 777.9 95.3 C 794.7 100.5, 811.6 63.6, 828.4 65.3 C 845.2 67.0, 862.0 97.2, 878.9 105.4 C 895.8 113.6, 912.6 112.5, 929.5 114.3 C 946.4 116.1, 971.6 115.8, 980.0 116.1"/>
+        <g fill="#fffcfa" stroke="#a85f63" stroke-width="2">
+          <circle cx="121.1" cy="60.3" r="4.6"/>
+          <circle cx="474.7" cy="37.2" r="4.6"/>
+          <circle cx="727.4" cy="34.0" r="4.6"/>
+        </g>
+        <g font-family="JetBrains Mono, monospace" font-size="12" fill="#a08c83" text-anchor="middle">
+          <text x="121.1" y="44">SXSW</text>
+          <text x="474.7" y="21">ACL</text>
+          <text x="727.4" y="18">SXSW</text>
+          <text x="20.0" y="228" text-anchor="start">Jan 2025</text>
+          <text x="626.3" y="228">Jan 2026</text>
+          <text x="980.0" y="228" text-anchor="end">Aug 2026</text>
+        </g>
+      </svg>
+      <figcaption class="cap">Monthly demand for Austin, straight out of the pipeline. Both peaks are festivals.</figcaption>
+    </figure>
   </section>
 
   <section id="findings">
-    <div class="shead">
-      <span class="num">II</span>
-      <h2>What it found</h2>
-    </div>
+    <div class="sn"><b>03</b> &nbsp;//&nbsp; What it found</div>
+    <h2>The pipeline was the <span class="k">easy half</span></h2>
+    <p class="dim">The useful half was what it turned up in its own inputs, and which
+      of my own ideas the measurements threw out.</p>
 
-    <p>
-      The pipeline was the easy half. The useful half was what it turned up in
-      its own inputs, and which of my ideas the measurements threw out.
-    </p>
-
-    <div class="findings">
-      <div class="finding">
+    <div class="cards">
+      <div class="card">
         <span class="n">01</span>
         <h3>A snapshot with every listing and no prices</h3>
-        <p>
-          The December 2025 scrape holds all <span class="num">11,251</span>
-          listings with the price column empty for every single one. A row-count
-          check passes it without complaint. It had been anchoring the as-of
-          rate lookup, which silently emptied the fact table. Completeness and
-          rate-usability became separate flags, because a snapshot can be
-          perfectly good for sizing a market and useless for pricing it.
-        </p>
+        <p>The December 2025 scrape holds all <span class="num">11,251</span> listings
+          with the price column empty for every single one. A row-count check passes
+          it without complaint. It had been anchoring the as-of rate lookup, which
+          silently emptied the fact table. Completeness and rate-usability became
+          separate flags, because a snapshot can be perfectly good for sizing a market
+          and useless for pricing it.</p>
       </div>
-      <div class="finding">
+      <div class="card">
         <span class="n">02</span>
         <h3>A scrape missing a quarter of the market</h3>
-        <p>
-          March 2026 returned <span class="num">8,170</span> listings against a
-          median of <span class="num">11,181</span>. Tracing listing IDs across
-          snapshots, <span class="num">2,533</span> listings present in both
-          December and June are absent from March, which is 84% of the gap. A
-          listing cannot leave a market and come back, so those were missed
-          rather than delisted. Both defects now trip a test on every build.
-        </p>
+        <p>March 2026 returned <span class="num">8,170</span> listings against a median
+          of <span class="num">11,181</span>. Tracing listing IDs across snapshots,
+          <span class="num">2,533</span> listings present in both December and June are
+          absent from March, which is 84% of the gap. A listing cannot leave a market
+          and come back, so those were missed rather than delisted. Both defects now
+          trip a test on every build.</p>
       </div>
-      <div class="finding">
+      <div class="card">
         <span class="n">03</span>
         <h3>A trend that was an artifact, not growth</h3>
-        <p>
-          Reviews climb from 31 in 2009 to 146,569 in 2025, and almost none of
-          that is the market growing: listings delisted before the first
-          snapshot never appear at all. Every model with a free trend parameter
-          lost to a trend-free baseline, and rerunning the backtest with an
-          extra year of history made each fitted model measurably worse. That is
-          a cleaner proof of the distortion than any argument about it.
-        </p>
+        <p>Reviews climb from 31 in 2009 to 146,569 in 2025, and almost none of that is
+          the market growing: listings delisted before the first snapshot never appear
+          at all. Every model with a free trend parameter lost to a trend-free
+          baseline, and rerunning the backtest with an extra year of history made each
+          fitted model measurably worse. That is a cleaner proof of the distortion than
+          any argument about it.</p>
       </div>
-      <div class="finding">
+      <div class="card">
         <span class="n">04</span>
         <h3>A fix that worked in theory and failed in practice</h3>
-        <p>
-          Six weeks out of 56 carry 34% of all forecast error, and the biggest
-          cluster is festival timing: SXSW peaked on 10 March in 2025 and 16
-          March in 2026, so a year-ago lookup misses twice. Blending the
-          surrounding weeks fixes it on a synthetic series built to contain the
-          effect, then loses on real data, because it degrades the ordinary
-          weeks holding the other two thirds of the error. That model stayed in
-          the repository as the reason the simpler one shipped.
-        </p>
+        <p>Six weeks out of 56 carry 34% of all forecast error, and the biggest cluster
+          is festival timing: SXSW peaked on 10 March in 2025 and 16 March in 2026, so
+          a year-ago lookup misses twice. Blending the surrounding weeks fixes it on a
+          synthetic series built to contain the effect, then loses on real data. That
+          model stayed in the repository as the reason the simpler one shipped.</p>
       </div>
     </div>
   </section>
 
-  <section id="hilton">
-    <div class="shead">
-      <span class="num">III</span>
-      <h2>Production work</h2>
-      <span class="label">Hilton &middot; 2023 to present</span>
+  <section id="estimator">
+    <div class="sn"><b>04</b> &nbsp;//&nbsp; Try it yourself</div>
+    <h2>The occupancy estimator, <span class="k">in your hands</span></h2>
+    <p class="dim">No bookings exist in this data, so occupancy has to be inferred.
+      Reviews stand in for stays, scaled by how often guests actually leave one and how
+      long they stay. Every assumption below is a real variable in the dbt project.
+      Move them and watch how much the answer depends on choices somebody had to make.</p>
+
+    <div class="est">
+      <div class="body">
+        <div class="controls">
+          <div class="ctl">
+            <label for="r">Reviews this month <b id="rv">9</b></label>
+            <input type="range" id="r" min="1" max="30" step="1" value="9">
+          </div>
+          <div class="ctl">
+            <label for="rr">Review rate <b id="rrv">50%</b></label>
+            <input type="range" id="rr" min="20" max="90" step="5" value="50">
+          </div>
+          <div class="ctl">
+            <label for="los">Length of stay <b id="losv">3 nights</b></label>
+            <input type="range" id="los" min="1" max="7" step="1" value="3">
+          </div>
+          <div class="ctl">
+            <label for="cap">Occupancy cap <b id="capv">70%</b></label>
+            <input type="range" id="cap" min="40" max="100" step="5" value="70">
+          </div>
+          <div class="ctl">
+            <label for="adr">Nightly rate <b id="adrv">$230</b></label>
+            <input type="range" id="adr" min="60" max="600" step="10" value="230">
+          </div>
+        </div>
+        <div class="out">
+          <div class="readout">
+            <div class="ro lead"><span>Occupancy</span><b id="occ">90%</b></div>
+            <div class="meter"><i id="bar" style="width:90%"></i></div>
+            <p class="capped" id="note"></p>
+            <div class="ro"><span>Estimated stays</span><b id="stays">18</b></div>
+            <div class="ro"><span>Nights booked</span><b id="nights">54</b></div>
+            <div class="ro"><span>RevPAR</span><b id="revpar">$0</b></div>
+          </div>
+        </div>
+      </div>
     </div>
+    <p class="cap" style="text-align:left;margin-top:.7rem;max-width:48ch">
+      Exact arithmetic on a 30-day month, the same formula the warehouse runs. The
+      review rate is the assumption nobody can verify from public data, which is why
+      it is the first thing in the project's limitations.
+    </p>
+  </section>
+
+  <section id="work">
+    <div class="sn"><b>05</b> &nbsp;//&nbsp; Production work</div>
+    <h2>What I do at <span class="k">Hilton</span></h2>
 
     <div class="entries">
       <div class="entry">
         <div class="entry-head">
           <h3>Deep learning pricing model for function space</h3>
-          <span class="label">Revenue Management</span>
+          <span class="meta">Revenue Management</span>
         </div>
-        <p>
-          A model pricing conference and meeting rooms across Hilton's global
-          portfolio. I built the training dataset and feature set, owned the
-          data pipeline feeding it in production, and validated its output
-          against realized pricing and booking outcomes.
-        </p>
+        <p>A model pricing conference and meeting rooms across Hilton's global
+          portfolio. I built the training dataset and feature set, owned the data
+          pipeline feeding it in production, and validated its output against realized
+          pricing and booking outcomes.</p>
       </div>
-
       <div class="entry">
         <div class="entry-head">
           <h3>Quality control data model</h3>
-          <span class="label">Revenue Management</span>
+          <span class="meta">Revenue Management</span>
         </div>
-        <p>
-          Designed and own the schema behind the team's quality control system,
+        <p>Designed and own the schema behind the team's quality control system,
           replacing a manual spreadsheet workflow with a normalized model. It
-          standardized definitions that had been living in individual files and
-          made automated failure surfacing, database ingestion, and rework
-          tracking possible.
-        </p>
+          standardized definitions that had been living in individual files and made
+          automated failure surfacing, database ingestion, and rework tracking
+          possible.</p>
       </div>
-
       <div class="entry">
         <div class="entry-head">
           <h3>Validation automation</h3>
-          <span class="label">Revenue Management</span>
+          <span class="meta">Revenue Management</span>
         </div>
-        <p>
-          Python and SQL automation that took a manual validation process from
-          over four hours to 10 to 20 minutes per property, an 80 to 90 percent
-          reduction that absorbed growing volume without added headcount.
-        </p>
+        <p>Python and SQL automation that took a manual validation process from over
+          four hours to 10 to 20 minutes per property, an 80 to 90 percent reduction
+          that absorbed growing volume without added headcount.</p>
       </div>
-
       <div class="entry">
         <div class="entry-head">
           <h3>A single source of truth for pipeline and account data</h3>
-          <span class="label">Sales Support</span>
+          <span class="meta">Sales Support</span>
         </div>
-        <p>
-          Consolidated fragmented pipeline, revenue, and account data from
-          several source systems, standardizing definitions across teams that
-          were reporting conflicting numbers from the same underlying data.
-          Promoted into Revenue Management after thirteen months.
-        </p>
+        <p>Consolidated fragmented pipeline, revenue, and account data from several
+          source systems, standardizing definitions across teams that were reporting
+          conflicting numbers from the same underlying data. Promoted into Revenue
+          Management after thirteen months.</p>
       </div>
     </div>
   </section>
 
-  <section id="tools">
-    <div class="shead">
-      <span class="num">IV</span>
-      <h2>Toolkit</h2>
-    </div>
+  <section id="journey">
+    <div class="sn"><b>06</b> &nbsp;//&nbsp; Journey</div>
+    <h2>Houston to Austin to <span class="k">Frisco</span></h2>
+    <p class="dim">Three Texas cities, a psychology degree that turned into a data
+      career, and a steady move toward the part of the work where the numbers get
+      built rather than just read.</p>
 
-    <dl class="tools">
-      <div class="tool">
-        <dt class="label">Languages</dt>
-        <dd>Python, SQL, R, Bash</dd>
-      </div>
-      <div class="tool">
-        <dt class="label">Platform</dt>
-        <dd>Snowflake, dbt, DuckDB, Airflow, Databricks, Spark, BigQuery, Redshift, Docker, AWS, Azure, Google Cloud Platform</dd>
-      </div>
-      <div class="tool">
-        <dt class="label">Modelling</dt>
-        <dd>scikit-learn, PyTorch, statsmodels, pandas, forecasting and backtesting, experiment design, causal inference and quasi-experimental methods</dd>
-      </div>
-      <div class="tool">
-        <dt class="label">Practice</dt>
-        <dd>Git, peer code review, schema and grain design, data quality testing, documentation, Agile</dd>
-      </div>
-      <div class="tool">
-        <dt class="label">Education</dt>
-        <dd>M.S. Data Science, New Jersey Institute of Technology, 2026 &middot; B.S. Psychology, University of Houston, 2020</dd>
-      </div>
-    </dl>
+    <div class="journey">
+      <svg viewBox="0 0 900 200" role="img" aria-label="Career path from Houston to Austin to Frisco, Texas.">
+        <path d="M 120 140 C 230 70, 330 70, 440 108 C 550 146, 660 110, 780 66"
+              fill="none" stroke="#e4cbc0" stroke-width="1.6" stroke-dasharray="5 6"/>
+        <g font-family="JetBrains Mono, monospace" text-anchor="middle">
+          <circle cx="120" cy="140" r="5" fill="#fffcfa" stroke="#b2823f" stroke-width="2"/>
+          <text x="120" y="168" font-size="14" fill="#3a2d29" letter-spacing="1.5">HOUSTON</text>
+          <text x="120" y="184" font-size="10.5" fill="#a08c83">B.S. Psychology &middot; where it started</text>
+
+          <circle cx="440" cy="108" r="5" fill="#fffcfa" stroke="#b2823f" stroke-width="2"/>
+          <text x="440" y="136" font-size="14" fill="#3a2d29" letter-spacing="1.5">AUSTIN</text>
+          <text x="440" y="152" font-size="10.5" fill="#a08c83">state health programs &middot; first SQL</text>
+
+          <circle cx="780" cy="66" r="6" fill="#a85f63" stroke="#fffcfa" stroke-width="2"/>
+          <text x="780" y="42" font-size="14" fill="#8c4a4f" letter-spacing="1.5">FRISCO</text>
+          <text x="780" y="94" font-size="10.5" fill="#a08c83">Hilton &middot; here now</text>
+        </g>
+      </svg>
+    </div>
   </section>
 
-  <footer class="close" id="contact">
-    <span class="label">V &nbsp;&middot;&nbsp; Get in touch</span>
-    <div class="row">
-      <span class="mailrow">
-        <span id="mail">aponteojennifer@gmail.com</span>
-        <button class="copy" id="copy" type="button">Copy</button>
-      </span>
-      <a href="https://github.com/AponteOJennifer">GitHub</a>
-      <a href="https://linkedin.com/in/jennifer-aponte">LinkedIn</a>
+  <section id="toolkit">
+    <div class="sn"><b>07</b> &nbsp;//&nbsp; Toolkit</div>
+    <h2>What I build <span class="k">with</span></h2>
+
+    <div style="margin-top:1.4rem">
+      <div class="rail">
+        <div class="meta">Languages</div>
+        <div class="tags">
+          <span class="tag on">Python</span><span class="tag on">SQL</span>
+          <span class="tag">R</span><span class="tag">Bash</span>
+        </div>
+      </div>
+      <div class="rail">
+        <div class="meta">Platform</div>
+        <div class="tags">
+          <span class="tag on">Snowflake</span><span class="tag on">dbt</span>
+          <span class="tag on">Airflow</span><span class="tag">DuckDB</span>
+          <span class="tag">Databricks</span><span class="tag">Spark</span>
+          <span class="tag">BigQuery</span><span class="tag">Redshift</span>
+          <span class="tag">Docker</span><span class="tag">AWS</span>
+          <span class="tag">Azure</span><span class="tag">GCP</span>
+        </div>
+      </div>
+      <div class="rail">
+        <div class="meta">Modelling</div>
+        <div class="tags">
+          <span class="tag on">scikit-learn</span><span class="tag">PyTorch</span>
+          <span class="tag">statsmodels</span><span class="tag">pandas</span>
+          <span class="tag">Forecasting</span><span class="tag">Backtesting</span>
+          <span class="tag">Experiment design</span><span class="tag">Causal inference</span>
+        </div>
+      </div>
+      <div class="rail">
+        <div class="meta">Practice</div>
+        <div class="tags">
+          <span class="tag">Git &amp; code review</span><span class="tag">Schema design</span>
+          <span class="tag">Data quality testing</span><span class="tag">Documentation</span>
+          <span class="tag">Agile</span>
+        </div>
+      </div>
+      <div class="rail">
+        <div class="meta">Education</div>
+        <div>
+          <p class="dim" style="margin:0;font-size:.85rem">
+            M.S. Data Science, New Jersey Institute of Technology, 2026<br>
+            B.S. Psychology, University of Houston, 2020
+          </p>
+        </div>
+      </div>
     </div>
-  </footer>
+  </section>
+
+  <section id="beyond">
+    <div class="sn"><b>08</b> &nbsp;//&nbsp; Beyond work</div>
+    <h2>Away from the <span class="k">warehouse</span></h2>
+    <div class="tags" style="margin-top:1.1rem">
+      <span class="tag">Reading, mostly romantasy</span>
+      <span class="tag">Travel, Japan so far</span>
+      <span class="tag">Korea next</span>
+      <span class="tag">Long walks</span>
+    </div>
+  </section>
+
+  <div class="close" id="contact">
+    <div class="sn"><b>09</b> &nbsp;//&nbsp; Let's talk</div>
+    <h2>Open to fully remote data, analytics and <span class="k">ML engineering</span> roles.</h2>
+    <div class="contactline">
+      <span><span id="mail">aponteojennifer@gmail.com</span><button class="copy" id="copy" type="button">Copy</button></span>
+      <a href="https://github.com/AponteOJennifer">GitHub &nearr;</a>
+      <a href="https://linkedin.com/in/jennifer-aponte">LinkedIn &nearr;</a>
+    </div>
+    <footer>
+      <span>&copy; 2026 Jennifer Aponte</span>
+      <span>Data Engineer &middot; Frisco, TX</span>
+    </footer>
+  </div>
 
 </div>
 
+<div class="scroll">scroll:// <b id="pct">0</b> %</div>
+
 <script>
   (function () {
-    var btn = document.getElementById('copy');
-    var mail = document.getElementById('mail');
-    if (!btn || !mail) return;
-    var reset = function () { setTimeout(function () { btn.textContent = 'Copy'; }, 1800); };
-    btn.addEventListener('click', function () {
-      var fallback = function () {
-        try {
-          var r = document.createRange();
-          r.selectNodeContents(mail);
-          var s = window.getSelection();
-          s.removeAllRanges();
-          s.addRange(r);
-          btn.textContent = 'Selected';
-        } catch (e) {
-          btn.textContent = 'Select it';
-        }
-        reset();
-      };
-      try {
-        navigator.clipboard.writeText(mail.textContent.trim()).then(function () {
-          btn.textContent = 'Copied';
-          reset();
-        }, fallback);
-      } catch (e) { fallback(); }
+    // ---- occupancy estimator: the warehouse formula, exactly ----
+    var el = function (id) { return document.getElementById(id); };
+    var ids = ['r', 'rr', 'los', 'cap', 'adr'];
+    var fmt = function (n) { return n.toLocaleString('en-US'); };
+
+    function recalc() {
+      var reviews = +el('r').value;
+      var rate = +el('rr').value / 100;
+      var los = +el('los').value;
+      var cap = +el('cap').value / 100;
+      var adr = +el('adr').value;
+      var days = 30;
+
+      var stays = reviews / rate;
+      var nights = stays * los;
+      var raw = nights / days;
+      var occ = Math.min(raw, cap);
+
+      el('rv').textContent = reviews;
+      el('rrv').textContent = Math.round(rate * 100) + '%';
+      el('losv').textContent = los + (los === 1 ? ' night' : ' nights');
+      el('capv').textContent = Math.round(cap * 100) + '%';
+      el('adrv').textContent = '$' + adr;
+
+      el('occ').textContent = (occ * 100).toFixed(1) + '%';
+      el('bar').style.width = Math.min(occ * 100, 100) + '%';
+      el('stays').textContent = fmt(Math.round(stays * 10) / 10);
+      el('nights').textContent = fmt(Math.round(nights * 10) / 10);
+      el('revpar').textContent = '$' + (adr * occ).toFixed(2);
+      el('note').textContent = raw > cap
+        ? 'Pinned at the cap. The raw estimate is ' + (raw * 100).toFixed(0) + '%, which is why the cap exists.'
+        : '';
+    }
+    ids.forEach(function (id) {
+      var n = el(id);
+      if (n) { n.addEventListener('input', recalc); }
     });
+    recalc();
+
+    // ---- copy email ----
+    var btn = el('copy'), mail = el('mail');
+    if (btn && mail) {
+      var reset = function () { setTimeout(function () { btn.textContent = 'Copy'; }, 1800); };
+      btn.addEventListener('click', function () {
+        var fallback = function () {
+          try {
+            var rg = document.createRange();
+            rg.selectNodeContents(mail);
+            var s = window.getSelection();
+            s.removeAllRanges(); s.addRange(rg);
+            btn.textContent = 'Selected';
+          } catch (e) { btn.textContent = 'Select it'; }
+          reset();
+        };
+        try {
+          navigator.clipboard.writeText(mail.textContent.trim())
+            .then(function () { btn.textContent = 'Copied'; reset(); }, fallback);
+        } catch (e) { fallback(); }
+      });
+    }
+
+    // ---- scroll readout ----
+    var pct = el('pct');
+    var tick = function () {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      var v = h > 0 ? Math.round(window.scrollY / h * 100) : 0;
+      pct.textContent = Math.max(0, Math.min(100, v));
+    };
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', tick);
+    tick();
   })();
 </script>
 </body>
