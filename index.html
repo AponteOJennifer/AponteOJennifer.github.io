@@ -309,6 +309,34 @@
     font-size: .66rem; color: var(--faint); z-index: 20;
   }
   .scroll b { color: var(--acc); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  /* ---------- game ---------- */
+  .game { border: 1px solid var(--line); background: var(--panel); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; margin-top: 1.6rem; }
+  .game .board { padding: 1.1rem 1rem .4rem; }
+  .game svg { display: block; width: 100%; height: auto; }
+  .glegend { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem 1.3rem; font-size: .7rem; color: var(--faint); padding: .3rem 0 .6rem; }
+  .glegend span { display: inline-flex; align-items: center; gap: .4rem; }
+  .glegend i { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+  .glegend .d-hist { background: var(--dim); }
+  .glegend .d-act { background: var(--acc); }
+  .glegend .d-mod { border: 2px solid var(--acc2); }
+  .glegend .d-you { border: 2px solid var(--fg); opacity: .75; }
+  .game .deck { border-top: 1px solid var(--line); background: var(--panel-2); padding: 1.1rem 1.3rem; }
+  .gtop { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .4rem 1rem; }
+  .gtop .rnd { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+  .gtop .mon { font-family: var(--serif); font-size: 1.6rem; color: var(--acc); line-height: 1; }
+  .gslide { margin: 1rem 0 .9rem; }
+  .gslide label { display: flex; justify-content: space-between; gap: 1rem; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-bottom: .35rem; }
+  .gslide label b { color: var(--acc); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .gslide input[type=range] { width: 100%; accent-color: var(--acc-deep); height: 1.2rem; margin: 0; }
+  .gmsg { font-size: .82rem; color: var(--dim); min-height: 2.6em; margin: 0 0 .9rem; max-width: none; }
+  .gmsg b { color: var(--fg); font-weight: 500; }
+  .scores { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .chip { border: 1px solid var(--line-firm); border-radius: 999px; padding: .2rem .8rem; font-size: .74rem; color: var(--dim); font-variant-numeric: tabular-nums; }
+  .chip b { color: var(--fg); font-weight: 500; }
+  .chip.you { border-color: var(--acc-deep); color: var(--acc); }
+  .chip.you b { color: var(--acc); }
+  .chip.win { background: var(--acc-soft); }
 </style>
 <style>
   html, body { margin: 0; }
@@ -331,6 +359,7 @@
       <a href="#estimator">./try-it</a>
       <a href="#work">./experience</a>
       <a href="#journey">./journey</a>
+      <a href="#play">./play</a>
     </nav>
     <div class="acts">
       <a class="btn" href="resume.pdf">&darr; CV</a>
@@ -710,8 +739,50 @@
     </div>
   </section>
 
+
+  <section id="play">
+    <div class="sn"><b>09</b> &nbsp;//&nbsp; Play a game</div>
+    <h2>Can you beat the <span class="k">forecast</span>?</h2>
+    <p class="dim">Six rounds. You can see Austin's real monthly demand through December
+      2025. Guess what each month of 2026 actually brought. The model guesses too, using
+      the same method that shipped in the pipeline. Lowest average error wins.</p>
+
+    <div class="game">
+      <div class="board"><svg id="gsvg" viewBox="0 0 1000 300" role="img"
+        aria-label="Austin monthly demand with your guess plotted against the model's."></svg>
+        <div class="glegend">
+          <span><i class="d-hist"></i>history you can see</span>
+          <span><i class="d-act"></i>what actually happened</span>
+          <span><i class="d-mod"></i>the model's guess</span>
+          <span><i class="d-you"></i>your guess</span>
+        </div>
+      </div>
+      <div class="deck">
+        <div class="gtop">
+          <span class="rnd">Round <b id="gr">1</b> of 6</span>
+          <span class="mon" id="gmon">January 2026</span>
+        </div>
+        <div class="gslide">
+          <label for="gguess">Your guess <b id="gval">12,000</b> reviews</label>
+          <input type="range" id="gguess" min="6000" max="20000" step="100" value="12000">
+        </div>
+        <p class="gmsg" id="gmsg">Drag the slider, then lock it in.</p>
+        <div class="scores">
+          <button class="btn on" id="glock" type="button">Lock it in</button>
+          <button class="btn" id="greset" type="button">Start over</button>
+          <span class="chip you">You <b id="gyou">&mdash;</b></span>
+          <span class="chip">Model <b id="gmodel">&mdash;</b></span>
+        </div>
+      </div>
+    </div>
+    <p class="cap" style="text-align:left;margin-top:.7rem;max-width:54ch">
+      Real figures from the warehouse. The model plays seasonal naive with drift: last
+      year's same month, rescaled by how the recent window compares to a year earlier.
+    </p>
+  </section>
+
   <div class="close" id="contact">
-    <div class="sn"><b>09</b> &nbsp;//&nbsp; Let's talk</div>
+    <div class="sn"><b>10</b> &nbsp;//&nbsp; Let's talk</div>
     <h2>Open to fully remote data, analytics and <span class="k">ML engineering</span> roles.</h2>
     <div class="contactline">
       <span><span id="mail">aponteojennifer@gmail.com</span><button class="copy" id="copy" type="button">Copy</button></span>
@@ -790,6 +861,140 @@
     window.addEventListener('scroll', tick, { passive: true });
     window.addEventListener('resize', tick);
     tick();
+  })();
+</script>
+
+<script>
+  // "Beat the forecast": six rounds against the shipped model, on real data.
+  (function () {
+    var el = function (id) { return document.getElementById(id); };
+    var svg = el('gsvg');
+    if (!svg) { return; }
+
+    // Austin monthly review counts, straight from the pipeline.
+    var A25 = [8126, 9538, 15228, 13489, 12678, 12171, 11551, 10669, 12474, 16437, 14498, 9426];
+    var A26 = [9115, 10451, 16603, 13396, 14963, 12869];
+    // Drift: Oct-Dec 2025 against Oct-Dec 2024. The model's only fitted quantity.
+    var DRIFT = 1.1658;
+    var MON = ['January', 'February', 'March', 'April', 'May', 'June'];
+
+    var LO = 6000, HI = 18500, TOP = 40, BOT = 262, X0 = 46, X1 = 968, N = 18;
+    var x = function (i) { return X0 + i * (X1 - X0) / (N - 1); };
+    var y = function (v) { return BOT - (v - LO) / (HI - LO) * (BOT - TOP); };
+    var fmt = function (n) { return Math.round(n).toLocaleString('en-US'); };
+
+    var round = 0, guesses = [], done = false;
+
+    function modelPick(i) { return A25[i] * DRIFT; }
+    function pctErr(a, b) { return Math.abs(a - b) / b * 100; }
+    function mean(a) { return a.reduce(function (s, v) { return s + v; }, 0) / a.length; }
+
+    function render() {
+      var pts25 = A25.map(function (v, i) { return x(i) + ',' + y(v); }).join(' ');
+      var revealed = round;
+      var seg = [x(11) + ',' + y(A25[11])];
+      for (var i = 0; i < revealed; i++) { seg.push(x(12 + i) + ',' + y(A26[i])); }
+
+      var marks = '';
+      for (var j = 0; j < revealed; j++) {
+        marks += '<circle cx="' + x(12 + j) + '" cy="' + y(A26[j]) + '" r="4.5" fill="var(--acc)"/>';
+        marks += '<circle cx="' + x(12 + j) + '" cy="' + y(modelPick(j)) + '" r="4" fill="none" stroke="var(--acc2)" stroke-width="1.8"/>';
+        marks += '<circle cx="' + x(12 + j) + '" cy="' + y(guesses[j]) + '" r="4" fill="none" stroke="var(--fg)" stroke-width="1.8" opacity=".75"/>';
+      }
+      if (!done) {
+        var gv = +el('gguess').value;
+        marks += '<line x1="' + x(12 + round) + '" y1="' + TOP + '" x2="' + x(12 + round) + '" y2="' + BOT +
+                 '" stroke="var(--line-firm)" stroke-width="1" stroke-dasharray="3 5"/>';
+        marks += '<circle cx="' + x(12 + round) + '" cy="' + y(gv) + '" r="6.5" fill="none" stroke="var(--acc)" stroke-width="2.2"/>';
+      }
+
+      svg.innerHTML =
+        '<line x1="' + ((x(11) + x(12)) / 2) + '" y1="' + (TOP - 12) + '" x2="' + ((x(11) + x(12)) / 2) +
+          '" y2="' + (BOT + 6) + '" stroke="var(--line-firm)" stroke-width="1"/>' +
+        '<polyline points="' + pts25 + '" fill="none" stroke="var(--dim)" stroke-width="2" stroke-linejoin="round"/>' +
+        (revealed ? '<polyline points="' + seg.join(' ') + '" fill="none" stroke="var(--acc)" stroke-width="2" stroke-linejoin="round"/>' : '') +
+        marks +
+        '<g font-family="JetBrains Mono, monospace" font-size="11" fill="var(--faint)">' +
+          '<text x="' + X0 + '" y="' + (BOT + 24) + '">Jan 2025</text>' +
+          '<text x="' + ((x(11) + x(12)) / 2) + '" y="' + (TOP - 18) + '" text-anchor="middle">you are here</text>' +
+          '<text x="' + X1 + '" y="' + (BOT + 24) + '" text-anchor="end">Jun 2026</text>' +
+        '</g>';
+    }
+
+    function refreshScores() {
+      if (!guesses.length) {
+        el('gyou').textContent = '\u2014';
+        el('gmodel').textContent = '\u2014';
+        return;
+      }
+      var ye = [], me = [];
+      for (var i = 0; i < guesses.length; i++) {
+        ye.push(pctErr(guesses[i], A26[i]));
+        me.push(pctErr(modelPick(i), A26[i]));
+      }
+      var ym = mean(ye), mm = mean(me);
+      el('gyou').textContent = ym.toFixed(1) + '%';
+      el('gmodel').textContent = mm.toFixed(1) + '%';
+      el('gyou').parentNode.classList.toggle('win', ym <= mm);
+      el('gmodel').parentNode.classList.toggle('win', mm < ym);
+    }
+
+    function setRound() {
+      el('gr').textContent = Math.min(round + 1, 6);
+      el('gmon').textContent = (MON[Math.min(round, 5)] || 'June') + ' 2026';
+    }
+
+    function lock() {
+      if (done) { return; }
+      var g = +el('gguess').value;
+      guesses.push(g);
+      var actual = A26[round], m = modelPick(round);
+      var you = pctErr(g, actual), mod = pctErr(m, actual);
+      var verdict = you < mod ? 'You took that round.'
+                  : you > mod ? 'The model took that round.' : 'Dead heat.';
+      el('gmsg').innerHTML =
+        MON[round] + ' came in at <b>' + fmt(actual) + '</b>. You said ' + fmt(g) +
+        ' (' + you.toFixed(1) + '% off). The model said ' + fmt(m) +
+        ' (' + mod.toFixed(1) + '% off). ' + verdict;
+
+      round++;
+      refreshScores();
+
+      if (round >= 6) {
+        done = true;
+        var ym = +el('gyou').textContent.replace('%', '');
+        var mm = +el('gmodel').textContent.replace('%', '');
+        el('gmsg').innerHTML += '<br><b>' + (ym <= mm
+          ? 'You beat the model over six rounds. That is genuinely hard.'
+          : 'The model held. Six rounds is a small sample, so run it again.') + '</b>';
+        el('glock').disabled = true;
+        el('glock').textContent = 'Six rounds done';
+        el('glock').classList.remove('on');
+      } else {
+        setRound();
+      }
+      render();
+    }
+
+    function reset() {
+      round = 0; guesses = []; done = false;
+      el('glock').disabled = false;
+      el('glock').textContent = 'Lock it in';
+      el('glock').classList.add('on');
+      el('gmsg').textContent = 'Drag the slider, then lock it in.';
+      el('gguess').value = 12000;
+      el('gval').textContent = '12,000';
+      setRound(); refreshScores(); render();
+    }
+
+    el('gguess').addEventListener('input', function () {
+      el('gval').textContent = fmt(+this.value);
+      if (!done) { render(); }
+    });
+    el('glock').addEventListener('click', lock);
+    el('greset').addEventListener('click', reset);
+
+    setRound(); render(); refreshScores();
   })();
 </script>
 </body>
