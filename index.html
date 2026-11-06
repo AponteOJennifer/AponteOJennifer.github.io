@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Jennifer Aponte builds the data infrastructure behind pricing decisions. Airflow, dbt and Snowflake, with a backtested short-term rental demand pipeline.">
 <meta name="author" content="Jennifer Aponte">
-<meta name="theme-color" content="#0a0f0e">
+<meta name="theme-color" content="#0b0d10">
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Jennifer Aponte">
 <meta property="og:description" content="Jennifer Aponte builds the data infrastructure behind pricing decisions. Airflow, dbt and Snowflake, with a backtested short-term rental demand pipeline.">
 <meta property="og:url" content="https://aponteojennifer.github.io/">
-<meta name="twitter:card" content="summary">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0f0e'/%3E%3Ctext x='32' y='45' font-family='Garamond,Georgia,serif' font-size='36' fill='%236ee7b7' text-anchor='middle'%3EJA%3C/text%3E%3C/svg%3E">
+<meta property="og:image" content="https://aponteojennifer.github.io/jennifer-aponte.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0d10'/%3E%3Ctext x='32' y='45' font-family='Garamond,Georgia,serif' font-size='36' fill='%23cdd9e5' text-anchor='middle'%3EJA%3C/text%3E%3C/svg%3E">
 <title>Jennifer Aponte</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap">
@@ -21,21 +22,21 @@
   :root {
     color-scheme: dark;
 
-    --bg: #0a0f0e;
-    --bg-2: #0d1413;
-    --panel: #111a18;
-    --panel-2: #0e1615;
-    --line: #1c2a27;
-    --line-firm: #2a3d38;
+    --bg: #0b0d10;
+    --bg-2: #0e1115;
+    --panel: #12161b;
+    --panel-2: #0f1317;
+    --line: #1e242b;
+    --line-firm: #2d3640;
 
-    --fg: #e9f1ee;
-    --dim: #93a8a2;
-    --faint: #6a7e78;
+    --fg: #eef2f6;
+    --dim: #9aa6b2;
+    --faint: #7b8793;
 
-    --acc: #6ee7b7;
-    --acc-deep: #34d399;
-    --acc-soft: rgba(110, 231, 183, .13);
-    --acc2: #e0c38a;
+    --acc: #cdd9e5;
+    --acc-deep: #aebdcc;
+    --acc-soft: rgba(205, 217, 229, .10);
+    --acc2: #c0ab86;
 
     --shadow: 0 1px 2px rgba(0,0,0,.4), 0 18px 44px -24px rgba(0,0,0,.8);
 
@@ -60,8 +61,8 @@
     content: "";
     position: fixed; inset: 0; z-index: -2; pointer-events: none;
     background-image:
-      radial-gradient(44rem 30rem at 84% -8%, rgba(52, 211, 153, .10), transparent 62%),
-      radial-gradient(38rem 26rem at -6% 48%, rgba(125, 211, 252, .06), transparent 60%),
+      radial-gradient(44rem 30rem at 84% -8%, rgba(205, 217, 229, .07), transparent 62%),
+      radial-gradient(38rem 26rem at -6% 48%, rgba(192, 171, 134, .05), transparent 60%),
       linear-gradient(var(--line) 1px, transparent 1px),
       linear-gradient(90deg, var(--line) 1px, transparent 1px);
     background-size: 100% 100%, 100% 100%, 64px 64px, 64px 64px;
@@ -80,7 +81,7 @@
     position: sticky;
     top: env(safe-area-inset-top, 0px);
     z-index: 30;
-    background: rgba(10, 15, 14, .86);
+    background: rgba(11, 13, 16, .86);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line);
@@ -108,6 +109,14 @@
   .acts { display: flex; gap: .5rem; margin-left: auto; }
   .navlinks + .acts { margin-left: 1.3rem; }
   @media (max-width: 880px) { .navlinks { display: none; } }
+  /* At phone width the tagline plus both buttons exceed the bar, so the
+     tagline goes and the brand is allowed to shrink. */
+  .brand { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .acts { flex: none; }
+  @media (max-width: 560px) {
+    .brand span { display: none; }
+    .btn { padding: .36rem .7rem; }
+  }
 
   .btn {
     display: inline-flex; align-items: center; gap: .4rem;
@@ -117,9 +126,9 @@
   }
   .btn:hover { border-color: var(--acc); color: var(--acc); }
   .btn.on {
-    background: var(--acc); border-color: var(--acc); color: #06231a; font-weight: 500;
+    background: var(--acc); border-color: var(--acc); color: #10161c; font-weight: 500;
   }
-  .btn.on:hover { background: var(--acc-deep); border-color: var(--acc-deep); color: #06231a; }
+  .btn.on:hover { background: var(--acc-deep); border-color: var(--acc-deep); color: #10161c; }
   .btn.lg { padding: .55rem 1.1rem; font-size: .84rem; }
 
   /* ---------- page ---------- */
@@ -303,7 +312,7 @@
   .scroll {
     position: fixed; right: max(12px, env(safe-area-inset-right, 0px));
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));
-    border: 1px solid var(--line-firm); background: rgba(10,15,14,.9);
+    border: 1px solid var(--line-firm); background: rgba(11,13,16,.9);
     backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
     border-radius: 6px; padding: .22rem .62rem;
     font-size: .66rem; color: var(--faint); z-index: 20;
@@ -337,6 +346,55 @@
   .chip.you { border-color: var(--acc-deep); color: var(--acc); }
   .chip.you b { color: var(--acc); }
   .chip.win { background: var(--acc-soft); }
+
+  /* ---------- skills ---------- */
+  .tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.5rem 0 1.3rem; }
+  .tab {
+    font-family: var(--mono); font-size: .82rem; cursor: pointer;
+    border: 1px solid var(--line-firm); background: var(--panel); color: var(--dim);
+    border-radius: 999px; padding: .4rem 1.05rem; white-space: nowrap;
+  }
+  .tab:hover { color: var(--fg); border-color: var(--acc-deep); }
+  .tab[aria-selected="true"] { background: var(--acc); border-color: var(--acc); color: #10161c; font-weight: 500; }
+  .tab:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
+  .skpanel { border: 1px solid var(--line); background: var(--panel); border-radius: 14px; padding: 1.5rem 1.6rem; box-shadow: var(--shadow); }
+  .skpanel[hidden] { display: none !important; }
+  .sublab { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); margin-bottom: 1.2rem; }
+  .sublab b { color: var(--acc); font-weight: 500; }
+  .skgroup { margin-top: 1.6rem; }
+  .skgroup:first-of-type { margin-top: 0; }
+  .skgroup > h4 {
+    margin: 0 0 .9rem; font-size: .66rem; font-weight: 500;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--faint);
+    padding-bottom: .45rem; border-bottom: 1px solid var(--line);
+  }
+  .skgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: .95rem 2.4rem; }
+  .skrow { min-width: 0; }
+  .skrow .top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .skrow .nm { font-size: .88rem; min-width: 0; }
+  .skrow .lv { font-size: .64rem; letter-spacing: .13em; text-transform: uppercase; color: var(--faint); white-space: nowrap; }
+  .skrow .lv.x { color: var(--acc); }
+  .skrow .skbar { display: block; height: 6px; border-radius: 999px; background: var(--line); margin-top: .45rem; overflow: hidden; }
+  .skrow .skbar b { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--acc2), var(--acc)); }
+  .scale { font-size: .75rem; color: var(--faint); margin-top: 1.2rem; max-width: 60ch; line-height: 1.8; }
+  .scale b { color: var(--dim); font-weight: 500; }
+
+  /* ---------- hero with portrait ---------- */
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; gap: 3rem; align-items: center; }
+  @media (max-width: 920px) { .hero { grid-template-columns: 1fr; gap: 2rem; } }
+  .hero-text { min-width: 0; }
+  .portrait { position: relative; min-width: 0; justify-self: center; width: 100%; max-width: 20rem; }
+  .portrait img {
+    display: block; width: 100%; height: auto; border-radius: 16px;
+    border: 1px solid var(--line-firm); box-shadow: var(--shadow);
+  }
+  /* A soft bloom behind the frame so it sits in the page rather than on it. */
+  .portrait::before {
+    content: ""; position: absolute; inset: -14% -10% -6%;
+    background: radial-gradient(60% 55% at 50% 40%, rgba(205,217,229,.12), transparent 70%);
+    z-index: -1; pointer-events: none;
+  }
+  @media (max-width: 920px) { .portrait { max-width: 15rem; justify-self: start; } }
 </style>
 <style>
   html, body { margin: 0; }
@@ -359,6 +417,7 @@
       <a href="#estimator">./try-it</a>
       <a href="#work">./experience</a>
       <a href="#journey">./journey</a>
+      <a href="#skills">./skills</a>
       <a href="#play">./play</a>
     </nav>
     <div class="acts">
@@ -370,7 +429,8 @@
 
 <div class="wrap" id="top">
 
-  <header>
+  <header class="hero">
+    <div class="hero-text">
     <span class="pill"><i></i>Frisco, TX &middot; Open to fully remote</span>
 
     <h1>Turning messy pipelines into numbers you can <span class="k">trust</span>.</h1>
@@ -384,14 +444,22 @@
       <a class="btn lg" href="#estimator">try the estimator</a>
       <a class="btn lg" href="resume.pdf">&darr; Download CV</a>
     </div>
+    </div>
 
+    <div class="portrait">
+      <img src="jennifer-aponte.jpg" width="760" height="950"
+           alt="Jennifer Aponte, data engineer">
+    </div>
+  </header>
+
+  <div class="statswrap">
     <div class="stats">
       <div class="stat"><b>146,490</b><span>listing-months modelled</span></div>
       <div class="stat"><b>2.48M</b><span>reviews processed</span></div>
       <div class="stat"><b>7.83%</b><span>forecast error</span></div>
       <div class="stat"><b>4</b><span>years in revenue mgmt</span></div>
     </div>
-  </header>
+  </div>
 
   <section id="about">
     <div class="sn"><b>01</b> &nbsp;//&nbsp; About</div>
@@ -470,24 +538,24 @@
       <svg viewBox="0 0 1000 250" role="img" aria-label="Austin short-term rental demand by month, January 2025 through August 2026, peaking in March and October.">
         <defs>
           <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#34d399" stop-opacity=".30"/>
-            <stop offset="55%" stop-color="#34d399" stop-opacity=".10"/>
-            <stop offset="100%" stop-color="#34d399" stop-opacity="0"/>
+            <stop offset="0%" stop-color="#aebdcc" stop-opacity=".30"/>
+            <stop offset="55%" stop-color="#aebdcc" stop-opacity=".10"/>
+            <stop offset="100%" stop-color="#aebdcc" stop-opacity="0"/>
           </linearGradient>
           <linearGradient id="stroke" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#e0c38a"/>
-            <stop offset="50%" stop-color="#6ee7b7"/>
-            <stop offset="100%" stop-color="#34d399"/>
+            <stop offset="0%" stop-color="#c0ab86"/>
+            <stop offset="50%" stop-color="#cdd9e5"/>
+            <stop offset="100%" stop-color="#aebdcc"/>
           </linearGradient>
         </defs>
         <path fill="url(#fill)" d="M 20.0 196.0 C 28.4 191.5, 53.7 191.6, 70.5 169.0 C 87.3 146.4, 104.2 72.9, 121.1 60.3 C 137.9 47.7, 154.8 85.4, 171.6 93.5 C 188.4 101.6, 205.3 104.8, 222.1 109.0 C 238.9 113.2, 255.8 115.1, 272.6 118.7 C 289.5 122.3, 306.4 125.7, 323.2 130.5 C 340.0 135.3, 356.9 150.3, 373.7 147.4 C 390.5 144.5, 407.4 131.3, 424.2 112.9 C 441.0 94.5, 457.9 43.7, 474.7 37.2 C 491.5 30.8, 508.4 51.9, 525.3 74.2 C 542.1 96.5, 559.0 154.0, 575.8 171.2 C 592.6 188.3, 609.5 180.4, 626.3 177.1 C 643.1 173.8, 659.9 175.4, 676.8 151.6 C 693.6 127.8, 710.5 43.4, 727.4 34.0 C 744.2 24.6, 761.1 90.1, 777.9 95.3 C 794.7 100.5, 811.6 63.6, 828.4 65.3 C 845.2 67.0, 862.0 97.2, 878.9 105.4 C 895.8 113.6, 912.6 112.5, 929.5 114.3 C 946.4 116.1, 971.6 115.8, 980.0 116.1 L 980.0 250.0 L 20.0 250.0 Z"/>
         <path fill="none" stroke="url(#stroke)" stroke-width="2.2" stroke-linecap="round" d="M 20.0 196.0 C 28.4 191.5, 53.7 191.6, 70.5 169.0 C 87.3 146.4, 104.2 72.9, 121.1 60.3 C 137.9 47.7, 154.8 85.4, 171.6 93.5 C 188.4 101.6, 205.3 104.8, 222.1 109.0 C 238.9 113.2, 255.8 115.1, 272.6 118.7 C 289.5 122.3, 306.4 125.7, 323.2 130.5 C 340.0 135.3, 356.9 150.3, 373.7 147.4 C 390.5 144.5, 407.4 131.3, 424.2 112.9 C 441.0 94.5, 457.9 43.7, 474.7 37.2 C 491.5 30.8, 508.4 51.9, 525.3 74.2 C 542.1 96.5, 559.0 154.0, 575.8 171.2 C 592.6 188.3, 609.5 180.4, 626.3 177.1 C 643.1 173.8, 659.9 175.4, 676.8 151.6 C 693.6 127.8, 710.5 43.4, 727.4 34.0 C 744.2 24.6, 761.1 90.1, 777.9 95.3 C 794.7 100.5, 811.6 63.6, 828.4 65.3 C 845.2 67.0, 862.0 97.2, 878.9 105.4 C 895.8 113.6, 912.6 112.5, 929.5 114.3 C 946.4 116.1, 971.6 115.8, 980.0 116.1"/>
-        <g fill="#0a0f0e" stroke="#6ee7b7" stroke-width="2">
+        <g fill="#0b0d10" stroke="#cdd9e5" stroke-width="2">
           <circle cx="121.1" cy="60.3" r="4.6"/>
           <circle cx="474.7" cy="37.2" r="4.6"/>
           <circle cx="727.4" cy="34.0" r="4.6"/>
         </g>
-        <g font-family="JetBrains Mono, monospace" font-size="12" fill="#6a7e78" text-anchor="middle">
+        <g font-family="JetBrains Mono, monospace" font-size="12" fill="#7b8793" text-anchor="middle">
           <text x="121.1" y="44">SXSW</text>
           <text x="474.7" y="21">ACL</text>
           <text x="727.4" y="18">SXSW</text>
@@ -658,74 +726,228 @@
     <div class="journey">
       <svg viewBox="0 0 900 200" role="img" aria-label="Career path from Washington DC to Houston to Dallas.">
         <path d="M 120 140 C 230 70, 330 70, 440 108 C 550 146, 660 110, 780 66"
-              fill="none" stroke="#2a3d38" stroke-width="1.6" stroke-dasharray="5 6"/>
+              fill="none" stroke="#2d3640" stroke-width="1.6" stroke-dasharray="5 6"/>
         <g font-family="JetBrains Mono, monospace" text-anchor="middle">
-          <circle cx="120" cy="140" r="5" fill="#0a0f0e" stroke="#e0c38a" stroke-width="2"/>
-          <text x="120" y="168" font-size="14" fill="#e9f1ee" letter-spacing="1.5">WASHINGTON, DC</text>
-          <text x="120" y="184" font-size="10.5" fill="#6a7e78">where it started</text>
+          <circle cx="120" cy="140" r="5" fill="#0b0d10" stroke="#c0ab86" stroke-width="2"/>
+          <text x="120" y="168" font-size="14" fill="#eef2f6" letter-spacing="1.5">WASHINGTON, DC</text>
+          <text x="120" y="184" font-size="10.5" fill="#7b8793">where it started</text>
 
-          <circle cx="440" cy="108" r="5" fill="#0a0f0e" stroke="#e0c38a" stroke-width="2"/>
-          <text x="440" y="136" font-size="14" fill="#e9f1ee" letter-spacing="1.5">HOUSTON</text>
-          <text x="440" y="152" font-size="10.5" fill="#6a7e78">B.S. Psychology</text>
+          <circle cx="440" cy="108" r="5" fill="#0b0d10" stroke="#c0ab86" stroke-width="2"/>
+          <text x="440" y="136" font-size="14" fill="#eef2f6" letter-spacing="1.5">HOUSTON</text>
+          <text x="440" y="152" font-size="10.5" fill="#7b8793">B.S. Psychology</text>
 
-          <circle cx="780" cy="66" r="6" fill="#6ee7b7" stroke="#0a0f0e" stroke-width="2"/>
-          <text x="780" y="42" font-size="14" fill="#6ee7b7" letter-spacing="1.5">DALLAS</text>
-          <text x="780" y="94" font-size="10.5" fill="#6a7e78">Hilton &middot; here now</text>
+          <circle cx="780" cy="66" r="6" fill="#cdd9e5" stroke="#0b0d10" stroke-width="2"/>
+          <text x="780" y="42" font-size="14" fill="#cdd9e5" letter-spacing="1.5">DALLAS</text>
+          <text x="780" y="94" font-size="10.5" fill="#7b8793">Hilton &middot; here now</text>
         </g>
       </svg>
     </div>
   </section>
 
-  <section id="toolkit">
-    <div class="sn"><b>07</b> &nbsp;//&nbsp; Toolkit</div>
+  <section id="skills">
+    <div class="sn"><b>07</b> &nbsp;//&nbsp; Skills</div>
     <h2>What I build <span class="k">with</span></h2>
+    <p class="dim">Rated against what I have shipped rather than what I have touched
+      once, which is why most of these are not maxed out.</p>
 
-    <div style="margin-top:1.4rem">
-      <div class="rail">
-        <div class="meta">Languages</div>
-        <div class="tags">
-          <span class="tag on">Python</span><span class="tag on">SQL</span>
-          <span class="tag">R</span><span class="tag">Bash</span>
-        </div>
-      </div>
-      <div class="rail">
-        <div class="meta">Platform</div>
-        <div class="tags">
-          <span class="tag on">Snowflake</span><span class="tag on">dbt</span>
-          <span class="tag on">Airflow</span><span class="tag">DuckDB</span>
-          <span class="tag">Databricks</span><span class="tag">Spark</span>
-          <span class="tag">BigQuery</span><span class="tag">Redshift</span>
-          <span class="tag">Docker</span><span class="tag">AWS</span>
-          <span class="tag">Azure</span><span class="tag">GCP</span>
-        </div>
-      </div>
-      <div class="rail">
-        <div class="meta">Modelling</div>
-        <div class="tags">
-          <span class="tag on">scikit-learn</span><span class="tag">PyTorch</span>
-          <span class="tag">statsmodels</span><span class="tag">pandas</span>
-          <span class="tag">Forecasting</span><span class="tag">Backtesting</span>
-          <span class="tag">Experiment design</span><span class="tag">Causal inference</span>
-        </div>
-      </div>
-      <div class="rail">
-        <div class="meta">Practice</div>
-        <div class="tags">
-          <span class="tag">Git &amp; code review</span><span class="tag">Schema design</span>
-          <span class="tag">Data quality testing</span><span class="tag">Documentation</span>
-          <span class="tag">Agile</span>
-        </div>
-      </div>
-      <div class="rail">
-        <div class="meta">Education</div>
-        <div>
-          <p class="dim" style="margin:0;font-size:.85rem">
-            M.S. Data Science, New Jersey Institute of Technology, 2026<br>
-            B.S. Psychology, University of Houston, 2020
-          </p>
-        </div>
-      </div>
+    <div class="tabs" role="tablist" aria-label="Skill categories">
+      <button class="tab" role="tab" id="t-prog" aria-controls="p-prog" aria-selected="true" data-k="prog" type="button">Programming</button>
+      <button class="tab" role="tab" id="t-de" aria-controls="p-de" aria-selected="false" data-k="de" type="button">Data Engineering</button>
+      <button class="tab" role="tab" id="t-swe" aria-controls="p-swe" aria-selected="false" data-k="swe" type="button">Software Engineering</button>
+      <button class="tab" role="tab" id="t-ds" aria-controls="p-ds" aria-selected="false" data-k="ds" type="button">Data Science</button>
+      <button class="tab" role="tab" id="t-cloud" aria-controls="p-cloud" aria-selected="false" data-k="cloud" type="button">Cloud &amp; Platform</button>
+      <button class="tab" role="tab" id="t-ai" aria-controls="p-ai" aria-selected="false" data-k="ai" type="button">AI &amp; Automation</button>
+      <button class="tab" role="tab" id="t-bi" aria-controls="p-bi" aria-selected="false" data-k="bi" type="button">BI &amp; Reporting</button>
     </div>
+
+      <div class="skpanel" id="p-prog" role="tabpanel" aria-labelledby="t-prog">
+        <div class="sublab"><b>01</b> &nbsp;//&nbsp; Programming</div>
+        <div class="skgroup">
+          <h4>Languages</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">SQL</span><span class="lv x">Expert</span></div><i class="skbar"><b style="width:100%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Python</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:84%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Bash</span><span class="lv">Working</span></div><i class="skbar"><b style="width:58%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">R</span><span class="lv">Familiar</span></div><i class="skbar"><b style="width:38%"></b></i></div>
+          </div>
+        </div>
+        <div class="skgroup">
+          <h4>Python stack</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">pandas</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:84%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">NumPy</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:78%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">scikit-learn</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:76%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">statsmodels</span><span class="lv">Working</span></div><i class="skbar"><b style="width:62%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">PyTorch</span><span class="lv">Working</span></div><i class="skbar"><b style="width:56%"></b></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="skpanel" id="p-de" role="tabpanel" aria-labelledby="t-de" hidden>
+        <div class="sublab"><b>02</b> &nbsp;//&nbsp; Data Engineering</div>
+        <div class="skgroup">
+          <h4>Modelling &amp; transformation</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Metric definitions &amp; semantic layers</span><span class="lv x">Expert</span></div><i class="skbar"><b style="width:100%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">dbt</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:86%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Dimensional modelling</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:84%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Schema &amp; grain design</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:82%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Slowly changing dimensions</span><span class="lv">Working</span></div><i class="skbar"><b style="width:64%"></b></i></div>
+          </div>
+        </div>
+        <div class="skgroup">
+          <h4>Orchestration &amp; pipelines</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Idempotent load design</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:82%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">ETL and ELT design</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:80%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Incremental &amp; snapshot ingestion</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:78%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Apache Airflow</span><span class="lv">Working</span></div><i class="skbar"><b style="width:66%"></b></i></div>
+          </div>
+        </div>
+        <div class="skgroup">
+          <h4>Quality &amp; governance</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Data quality testing</span><span class="lv x">Expert</span></div><i class="skbar"><b style="width:100%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Reconciliation against source</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:86%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Anomaly &amp; defect detection</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:82%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Data governance</span><span class="lv">Working</span></div><i class="skbar"><b style="width:66%"></b></i></div>
+          </div>
+        </div>
+        <div class="skgroup">
+          <h4>Warehouses &amp; storage</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Snowflake</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:84%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Parquet &amp; columnar formats</span><span class="lv">Working</span></div><i class="skbar"><b style="width:64%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">DuckDB</span><span class="lv">Working</span></div><i class="skbar"><b style="width:62%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Redshift</span><span class="lv">Working</span></div><i class="skbar"><b style="width:56%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">BigQuery</span><span class="lv">Familiar</span></div><i class="skbar"><b style="width:40%"></b></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="skpanel" id="p-swe" role="tabpanel" aria-labelledby="t-swe" hidden>
+        <div class="sublab"><b>03</b> &nbsp;//&nbsp; Software Engineering</div>
+        <div class="skgroup">
+          <h4>Practice</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Git &amp; version control</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:84%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Peer code review</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:82%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Automated testing</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:80%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Technical documentation</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:82%"></b></i></div>
+          </div>
+        </div>
+        <div class="skgroup">
+          <h4>Design</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Error handling &amp; retries</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:76%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Data contracts &amp; interfaces</span><span class="lv">Working</span></div><i class="skbar"><b style="width:64%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Schema migration</span><span class="lv">Working</span></div><i class="skbar"><b style="width:60%"></b></i></div>
+          </div>
+        </div>
+        <div class="skgroup">
+          <h4>Tooling</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Docker</span><span class="lv">Working</span></div><i class="skbar"><b style="width:58%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Shell scripting</span><span class="lv">Working</span></div><i class="skbar"><b style="width:58%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">CI workflows</span><span class="lv">Working</span></div><i class="skbar"><b style="width:54%"></b></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="skpanel" id="p-ds" role="tabpanel" aria-labelledby="t-ds" hidden>
+        <div class="sublab"><b>04</b> &nbsp;//&nbsp; Data Science</div>
+        <div class="skgroup">
+          <h4>Experimentation</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Experiment design</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:86%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">A/B testing</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:84%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Causal inference</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:84%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Difference-in-differences</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:80%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Quasi-experimental design</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:78%"></b></i></div>
+          </div>
+        </div>
+        <div class="skgroup">
+          <h4>Forecasting</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Demand forecasting</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:84%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Backtesting &amp; rolling origin</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:82%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Time series methods</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:80%"></b></i></div>
+          </div>
+        </div>
+        <div class="skgroup">
+          <h4>Machine learning</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Feature engineering</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:82%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Model validation &amp; error analysis</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:80%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Regression &amp; classification</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:80%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Clustering &amp; segmentation</span><span class="lv">Working</span></div><i class="skbar"><b style="width:66%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Deep learning</span><span class="lv">Working</span></div><i class="skbar"><b style="width:56%"></b></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="skpanel" id="p-cloud" role="tabpanel" aria-labelledby="t-cloud" hidden>
+        <div class="sublab"><b>05</b> &nbsp;//&nbsp; Cloud &amp; Platform</div>
+        <div class="skgroup">
+          <h4>Platforms</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Azure</span><span class="lv">Working</span></div><i class="skbar"><b style="width:64%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Databricks</span><span class="lv">Working</span></div><i class="skbar"><b style="width:62%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">AWS</span><span class="lv">Working</span></div><i class="skbar"><b style="width:58%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Google Cloud</span><span class="lv">Working</span></div><i class="skbar"><b style="width:54%"></b></i></div>
+          </div>
+        </div>
+        <div class="skgroup">
+          <h4>Distributed compute</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Spark &amp; PySpark</span><span class="lv">Working</span></div><i class="skbar"><b style="width:58%"></b></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="skpanel" id="p-ai" role="tabpanel" aria-labelledby="t-ai" hidden>
+        <div class="sublab"><b>06</b> &nbsp;//&nbsp; AI &amp; Automation</div>
+        <div class="skgroup">
+          <h4>Day to day</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">AI coding assistants, daily</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:88%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Verifying generated output</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:84%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Workflow automation</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:80%"></b></i></div>
+          </div>
+        </div>
+        <div class="skgroup">
+          <h4>Building with models</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Prompting &amp; grounding</span><span class="lv">Working</span></div><i class="skbar"><b style="width:66%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">LLM application patterns</span><span class="lv">Working</span></div><i class="skbar"><b style="width:56%"></b></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="skpanel" id="p-bi" role="tabpanel" aria-labelledby="t-bi" hidden>
+        <div class="sublab"><b>07</b> &nbsp;//&nbsp; BI &amp; Reporting</div>
+        <div class="skgroup">
+          <h4>Communicating results</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Stakeholder reporting</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:84%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Dashboard design</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:76%"></b></i></div>
+          </div>
+        </div>
+        <div class="skgroup">
+          <h4>Tools</h4>
+          <div class="skgrid">
+          <div class="skrow"><div class="top"><span class="nm">Power BI</span><span class="lv">Advanced</span></div><i class="skbar"><b style="width:78%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Tableau</span><span class="lv">Working</span></div><i class="skbar"><b style="width:66%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">Looker</span><span class="lv">Working</span></div><i class="skbar"><b style="width:62%"></b></i></div>
+          <div class="skrow"><div class="top"><span class="nm">MicroStrategy</span><span class="lv">Working</span></div><i class="skbar"><b style="width:58%"></b></i></div>
+          </div>
+        </div>
+      </div>
+
+    <p class="scale">
+      <b>Expert</b> I would teach it and debug someone else's.
+      <b>Advanced</b> I ship it in production.
+      <b>Working</b> I have built real things with it.
+      <b>Familiar</b> I can read it and get productive quickly.
+    </p>
+    <p class="scale" style="margin-top:.4rem">
+      M.S. Data Science, New Jersey Institute of Technology, 2026 &nbsp;&middot;&nbsp;
+      B.S. Psychology, University of Houston, 2020
+    </p>
   </section>
 
   <section id="beyond">
@@ -995,6 +1217,32 @@
     el('greset').addEventListener('click', reset);
 
     setRound(); render(); refreshScores();
+  })();
+</script>
+
+<script>
+  // Skill category tabs, with arrow-key navigation.
+  (function () {
+    var tabs = [].slice.call(document.querySelectorAll('.tab[data-k]'));
+    if (!tabs.length) { return; }
+    function show(key) {
+      tabs.forEach(function (t) {
+        var on = t.dataset.k === key;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        var panel = document.getElementById('p-' + t.dataset.k);
+        if (panel) { panel.hidden = !on; }
+      });
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { show(t.dataset.k); });
+      t.addEventListener('keydown', function (e) {
+        var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!d) { return; }
+        e.preventDefault();
+        var next = tabs[(i + d + tabs.length) % tabs.length];
+        next.focus(); show(next.dataset.k);
+      });
+    });
   })();
 </script>
 </body>
