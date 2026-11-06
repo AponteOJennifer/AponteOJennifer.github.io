@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Jennifer Aponte builds the data infrastructure behind pricing decisions. Airflow, dbt and Snowflake, with a backtested short-term rental demand pipeline.">
+<meta name="author" content="Jennifer Aponte">
+<meta name="theme-color" content="#fbf7f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15100e" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Jennifer Aponte">
+<meta property="og:description" content="Jennifer Aponte builds the data infrastructure behind pricing decisions. Airflow, dbt and Snowflake, with a backtested short-term rental demand pipeline.">
+<meta property="og:url" content="https://aponteojennifer.github.io/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232c2420'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' fill='%23c9ab7e' text-anchor='middle'%3EJA%3C/text%3E%3C/svg%3E">
+<title>Jennifer Aponte</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:ital,wght@0,300;0,400;0,500;1,400&display=swap">
+<style>
+  /* Layout: a magazine. Masthead, contents, then numbered sections on a single
+     measured column, with figures set as a spread. */
+  :root {
+    --paper: #fbf7f4;
+    --card: #ffffff;
+    --ink: #2c2420;
+    --muted: #7b6b62;
+    --rule: #e9ded6;
+    --rule-ink: #d6c6ba;
+    --rose: #a2676a;
+    --champagne: #c9ab7e;
+
+    --display: "Bodoni Moda", ui-serif, Didot, Georgia, serif;
+    --sans: "Jost", ui-sans-serif, "Avenir Next", system-ui, sans-serif;
+
+    --measure: 34rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #15100e;
+      --card: #1d1715;
+      --ink: #f1e8e2;
+      --muted: #b2a096;
+      --rule: #2c2320;
+      --rule-ink: #41352f;
+      --rose: #d79a9c;
+      --champagne: #dcbc8c;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #15100e;
+    --card: #1d1715;
+    --ink: #f1e8e2;
+    --muted: #b2a096;
+    --rule: #2c2320;
+    --rule-ink: #41352f;
+    --rose: #d79a9c;
+    --champagne: #dcbc8c;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.72;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .sheet {
+    max-width: 58rem;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 2.25rem 4.5rem;
+  }
+
+  a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--rule-ink); padding-bottom: 1px; }
+  a:hover { border-bottom-color: var(--rose); color: var(--rose); }
+  a:focus-visible { outline: 2px solid var(--rose); outline-offset: 4px; }
+
+  .label {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------------- masthead ---------------- */
+  .masthead { border-top: 1px solid var(--ink); padding-top: 0.6rem; }
+  .masthead .topline {
+    display: flex; justify-content: space-between; gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .name {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(3rem, 13vw, 7.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+    /* Descenders overhang a sub-1 line box, so the bottom margin carries the
+       p in Aponte clear of the rule beneath it. */
+    margin: 1.4rem 0 1.9rem;
+    text-wrap: balance;
+  }
+  .masthead .baseline {
+    border-top: 1px solid var(--ink);
+    padding-top: 0.6rem;
+    display: flex; justify-content: space-between; gap: 0.6rem 1.5rem;
+    flex-wrap: wrap;
+  }
+  .baseline em {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+
+  /* ---------------- contents ---------------- */
+  .contents {
+    margin-top: 3.25rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 1.4rem 2.5rem;
+  }
+  .contents > a {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    padding-top: 0.6rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+    min-width: 0;
+  }
+  .contents > a:hover { color: var(--rose); border-top-color: var(--rose); }
+  .contents .num {
+    font-family: var(--display);
+    font-size: 0.85rem;
+    color: var(--champagne);
+    flex: none;
+  }
+  .contents .ttl { font-size: 0.95rem; }
+
+  /* ---------------- lede ---------------- */
+  .lede {
+    margin: 3.5rem 0 0;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.3rem, 3.6vw, 1.75rem);
+    line-height: 1.42;
+    max-width: 30rem;
+    text-wrap: pretty;
+  }
+  .lede-sub {
+    margin: 1.25rem 0 0;
+    max-width: var(--measure);
+    color: var(--muted);
+  }
+
+  /* ---------------- sections ---------------- */
+  section { margin-top: 4.5rem; }
+  .shead {
+    border-top: 1px solid var(--ink);
+    padding-top: 0.6rem;
+    display: flex; gap: 1rem; align-items: baseline; flex-wrap: wrap;
+    margin-bottom: 1.6rem;
+  }
+  .shead .num { font-family: var(--display); color: var(--champagne); font-size: 0.9rem; }
+  h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.6rem, 4.4vw, 2.2rem);
+    line-height: 1.15;
+    margin: 0;
+    flex: 1 1 14rem;
+    min-width: 0;
+  }
+  h3 { font-family: var(--sans); font-weight: 500; font-size: 1.02rem; margin: 0; letter-spacing: 0.005em; }
+  p { margin: 0 0 1.1rem; max-width: var(--measure); }
+  p:last-child { margin-bottom: 0; }
+
+  .kicker {
+    font-family: var(--display);
+    font-style: italic;
+    color: var(--rose);
+    font-size: 1.02rem;
+    margin-bottom: 0.9rem;
+  }
+
+  /* ---------------- figures spread ---------------- */
+  .spread {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 1.8rem 2.2rem;
+    margin: 2.4rem 0;
+    padding: 1.9rem 0;
+    border-top: 1px solid var(--rule-ink);
+    border-bottom: 1px solid var(--rule-ink);
+  }
+  .fig { min-width: 0; }
+  .fig b {
+    display: block;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.1rem, 6.5vw, 2.9rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .fig span {
+    display: block;
+    margin-top: 0.55rem;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+
+  /* ---------------- findings ---------------- */
+  .findings { margin: 2.2rem 0 0; display: flex; flex-direction: column; gap: 1.9rem; }
+  .finding { display: grid; grid-template-columns: 2.1rem 1fr; gap: 0 1.1rem; min-width: 0; }
+  .finding .n {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    color: var(--champagne);
+    line-height: 1.5;
+  }
+  .finding h3 { margin-bottom: 0.3rem; }
+  .finding p { color: var(--muted); margin: 0; font-size: 0.95rem; }
+  .finding .n + h3 { grid-column: 2; }
+  .finding p { grid-column: 2; }
+  .num { font-variant-numeric: tabular-nums; }
+  .pick { color: var(--rose); }
+  @media (max-width: 520px) {
+    .finding { grid-template-columns: 1fr; gap: 0.3rem; }
+    .finding .n + h3, .finding p { grid-column: 1; }
+  }
+
+  /* ---------------- entries ---------------- */
+  .entries { display: flex; flex-direction: column; }
+  .entry {
+    padding: 1.4rem 0;
+    border-top: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .entry:first-child { border-top: 0; padding-top: 0; }
+  .entry-head { display: flex; flex-wrap: wrap; gap: 0.15rem 1rem; align-items: baseline; }
+  .entry-head .label { flex: none; }
+  .entry p { color: var(--muted); font-size: 0.95rem; }
+
+  /* ---------------- tools ---------------- */
+  .tools { display: flex; flex-direction: column; }
+  .tool {
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    gap: 0.35rem 2rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--rule);
+    min-width: 0;
+  }
+  .tool:first-child { border-top: 0; padding-top: 0; }
+  .tool dd { margin: 0; font-size: 0.95rem; min-width: 0; }
+  @media (max-width: 560px) { .tool { grid-template-columns: 1fr; } }
+
+  /* ---------------- close ---------------- */
+  .close { margin-top: 4.5rem; border-top: 1px solid var(--ink); padding-top: 1.4rem; }
+  .close .row {
+    display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; align-items: baseline;
+    margin-top: 0.9rem;
+  }
+  .mailrow { display: inline-flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+  .copy {
+    font-family: var(--sans);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--rule-ink);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+    cursor: pointer;
+  }
+  .copy:hover { color: var(--rose); border-color: var(--rose); }
+</style>
+<style>
+  html, body { margin: 0; }
+  :root {
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  img { max-width: 100%; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="masthead">
+    <div class="topline">
+      <span class="label">Portfolio</span>
+      <span class="label">Data &amp; Analytics Engineering</span>
+    </div>
+    <h1 class="name">Jennifer Aponte</h1>
+    <div class="baseline">
+      <em>Pricing, demand, and the data underneath both</em>
+      <span class="label">Frisco, Texas &middot; Open to fully remote</span>
+    </div>
+
+    <nav class="contents">
+      <a href="#pipeline"><span class="num">I</span><span class="ttl">Short-term rental pipeline</span></a>
+      <a href="#findings"><span class="num">II</span><span class="ttl">What it found</span></a>
+      <a href="#hilton"><span class="num">III</span><span class="ttl">Production work</span></a>
+      <a href="#tools"><span class="num">IV</span><span class="ttl">Toolkit</span></a>
+      <a href="#contact"><span class="num">V</span><span class="ttl">Contact</span></a>
+    </nav>
+  </header>
+
+  <p class="lede">
+    I build the data infrastructure that pricing decisions rest on, and I spend
+    most of my time on the part nobody sees: proving the numbers are right
+    before anyone acts on them.
+  </p>
+  <p class="lede-sub">
+    Four years at Hilton across revenue management and sales support, writing
+    production dbt models on Snowflake and owning the pipeline behind a deep
+    learning pricing model. M.S. in Data Science, and a psychology degree that
+    turns out to be unexpectedly useful for understanding how people actually
+    read a number.
+  </p>
+
+  <section id="pipeline">
+    <div class="shead">
+      <span class="num">I</span>
+      <h2>Short-term rental pricing and demand pipeline</h2>
+      <span class="label"><a href="https://github.com/AponteOJennifer/str-pipeline">View the repository</a></span>
+    </div>
+
+    <p class="kicker">Airflow &middot; dbt &middot; DuckDB &middot; scikit-learn</p>
+
+    <p>
+      Hotel revenue management runs on three numbers: occupancy, average daily
+      rate, and RevPAR. Short-term rental data is almost never analyzed that way,
+      because the public data contains no bookings at all. It does contain
+      reviews, and reviews are a documented proxy for stays.
+    </p>
+    <p>
+      This pipeline ingests Inside Airbnb snapshots for Austin with Airflow,
+      models them in dbt on a DuckDB warehouse, and produces those three metrics
+      by neighbourhood and month, with a backtested weekly demand forecast on
+      top.
+    </p>
+
+    <div class="spread">
+      <div class="fig"><b>146,490</b><span>listing-months modelled</span></div>
+      <div class="fig"><b>2.48M</b><span>reviews deduplicated</span></div>
+      <div class="fig"><b>7.83%</b><span>forecast error, twelve weeks out</span></div>
+      <div class="fig"><b>24</b><span>tests on every build</span></div>
+    </div>
+
+    <p>
+      The forecast is seasonal naive with drift, scored across twelve rolling
+      origins at a twelve week horizon: <span class="num">34%</span> better than
+      the baseline, with prediction intervals taken from the backtest residuals
+      rather than assumed. Forecasts are keyed on training vintage, so every
+      past forecast stays scoreable against what actually happened.
+    </p>
+  </section>
+
+  <section id="findings">
+    <div class="shead">
+      <span class="num">II</span>
+      <h2>What it found</h2>
+    </div>
+
+    <p>
+      The pipeline was the easy half. The useful half was what it turned up in
+      its own inputs, and which of my ideas the measurements threw out.
+    </p>
+
+    <div class="findings">
+      <div class="finding">
+        <span class="n">01</span>
+        <h3>A snapshot with every listing and no prices</h3>
+        <p>
+          The December 2025 scrape holds all <span class="num">11,251</span>
+          listings with the price column empty for every single one. A row-count
+          check passes it without complaint. It had been anchoring the as-of
+          rate lookup, which silently emptied the fact table. Completeness and
+          rate-usability became separate flags, because a snapshot can be
+          perfectly good for sizing a market and useless for pricing it.
+        </p>
+      </div>
+      <div class="finding">
+        <span class="n">02</span>
+        <h3>A scrape missing a quarter of the market</h3>
+        <p>
+          March 2026 returned <span class="num">8,170</span> listings against a
+          median of <span class="num">11,181</span>. Tracing listing IDs across
+          snapshots, <span class="num">2,533</span> listings present in both
+          December and June are absent from March, which is 84% of the gap. A
+          listing cannot leave a market and come back, so those were missed
+          rather than delisted. Both defects now trip a test on every build.
+        </p>
+      </div>
+      <div class="finding">
+        <span class="n">03</span>
+        <h3>A trend that was an artifact, not growth</h3>
+        <p>
+          Reviews climb from 31 in 2009 to 146,569 in 2025, and almost none of
+          that is the market growing: listings delisted before the first
+          snapshot never appear at all. Every model with a free trend parameter
+          lost to a trend-free baseline, and rerunning the backtest with an
+          extra year of history made each fitted model measurably worse. That is
+          a cleaner proof of the distortion than any argument about it.
+        </p>
+      </div>
+      <div class="finding">
+        <span class="n">04</span>
+        <h3>A fix that worked in theory and failed in practice</h3>
+        <p>
+          Six weeks out of 56 carry 34% of all forecast error, and the biggest
+          cluster is festival timing: SXSW peaked on 10 March in 2025 and 16
+          March in 2026, so a year-ago lookup misses twice. Blending the
+          surrounding weeks fixes it on a synthetic series built to contain the
+          effect, then loses on real data, because it degrades the ordinary
+          weeks holding the other two thirds of the error. That model stayed in
+          the repository as the reason the simpler one shipped.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="hilton">
+    <div class="shead">
+      <span class="num">III</span>
+      <h2>Production work</h2>
+      <span class="label">Hilton &middot; 2023 to present</span>
+    </div>
+
+    <div class="entries">
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Deep learning pricing model for function space</h3>
+          <span class="label">Revenue Management</span>
+        </div>
+        <p>
+          A model pricing conference and meeting rooms across Hilton's global
+          portfolio. I built the training dataset and feature set, owned the
+          data pipeline feeding it in production, and validated its output
+          against realized pricing and booking outcomes.
+        </p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Quality control data model</h3>
+          <span class="label">Revenue Management</span>
+        </div>
+        <p>
+          Designed and own the schema behind the team's quality control system,
+          replacing a manual spreadsheet workflow with a normalized model. It
+          standardized definitions that had been living in individual files and
+          made automated failure surfacing, database ingestion, and rework
+          tracking possible.
+        </p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Validation automation</h3>
+          <span class="label">Revenue Management</span>
+        </div>
+        <p>
+          Python and SQL automation that took a manual validation process from
+          over four hours to 10 to 20 minutes per property, an 80 to 90 percent
+          reduction that absorbed growing volume without added headcount.
+        </p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <h3>A single source of truth for pipeline and account data</h3>
+          <span class="label">Sales Support</span>
+        </div>
+        <p>
+          Consolidated fragmented pipeline, revenue, and account data from
+          several source systems, standardizing definitions across teams that
+          were reporting conflicting numbers from the same underlying data.
+          Promoted into Revenue Management after thirteen months.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tools">
+    <div class="shead">
+      <span class="num">IV</span>
+      <h2>Toolkit</h2>
+    </div>
+
+    <dl class="tools">
+      <div class="tool">
+        <dt class="label">Languages</dt>
+        <dd>Python, SQL, R, Bash</dd>
+      </div>
+      <div class="tool">
+        <dt class="label">Platform</dt>
+        <dd>Snowflake, dbt, DuckDB, Airflow, Databricks, Spark, BigQuery, Redshift, Docker, AWS, Azure, Google Cloud Platform</dd>
+      </div>
+      <div class="tool">
+        <dt class="label">Modelling</dt>
+        <dd>scikit-learn, PyTorch, statsmodels, pandas, forecasting and backtesting, experiment design, causal inference and quasi-experimental methods</dd>
+      </div>
+      <div class="tool">
+        <dt class="label">Practice</dt>
+        <dd>Git, peer code review, schema and grain design, data quality testing, documentation, Agile</dd>
+      </div>
+      <div class="tool">
+        <dt class="label">Education</dt>
+        <dd>M.S. Data Science, New Jersey Institute of Technology, 2026 &middot; B.S. Psychology, University of Houston, 2020</dd>
+      </div>
+    </dl>
+  </section>
+
+  <footer class="close" id="contact">
+    <span class="label">V &nbsp;&middot;&nbsp; Get in touch</span>
+    <div class="row">
+      <span class="mailrow">
+        <span id="mail">aponteojennifer@gmail.com</span>
+        <button class="copy" id="copy" type="button">Copy</button>
+      </span>
+      <a href="https://github.com/AponteOJennifer">GitHub</a>
+      <a href="https://linkedin.com/in/jennifer-aponte">LinkedIn</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('copy');
+    var mail = document.getElementById('mail');
+    if (!btn || !mail) return;
+    var reset = function () { setTimeout(function () { btn.textContent = 'Copy'; }, 1800); };
+    btn.addEventListener('click', function () {
+      var fallback = function () {
+        try {
+          var r = document.createRange();
+          r.selectNodeContents(mail);
+          var s = window.getSelection();
+          s.removeAllRanges();
+          s.addRange(r);
+          btn.textContent = 'Selected';
+        } catch (e) {
+          btn.textContent = 'Select it';
+        }
+        reset();
+      };
+      try {
+        navigator.clipboard.writeText(mail.textContent.trim()).then(function () {
+          btn.textContent = 'Copied';
+          reset();
+        }, fallback);
+      } catch (e) { fallback(); }
+    });
+  })();
+</script>
+</body>
+</html>
